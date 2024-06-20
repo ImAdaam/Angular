@@ -1,0 +1,76 @@
+<!--
+<input type="text" (input)="onSearch($event)" placeholder="Keresés...">
+<div *ngIf="szurtReceptek.length === 0 && receptekBetoltve">
+  Nincs találat.
+</div>
+<div class="recept-tiles" *ngIf="szurtReceptek.length > 0">
+  <div class="recept-tile" *ngFor="let recept of szurtReceptek">
+    <h3>{{ recept.kodneve }}</h3>
+    <p>{{ recept.cim }}</p>
+    <p>{{ recept.leiras }}</p>
+    <ul>
+      <li *ngFor="let hozzavalo of recept.hozzavalok">
+        {{ hozzavalo.anyag.nev }} - {{ hozzavalo.mennyiseg }} {{ hozzavalo.egyseg }}
+      </li>
+    </ul>
+    <div class="allergen-icons">
+      <h4>Allergének:</h4>
+      <ul>
+        <li *ngFor="let allergen of recept.allergenek">
+          <img [src]="allergen.iconUrl" alt="{{ allergen.nev }}" width="24" height="24">
+          {{ allergen.nev }}
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+-->
+
+
+<input type="text" (input)="onSearch($event)" placeholder="Keresés...">
+<button (click)="showReceptek()">Receptek listázása</button>
+
+<div class="recept-s">
+  <div class="recept-tiles">
+
+    <div class="card flex justify-content-center">
+      <p-scroller
+        [items]="receptek"
+        [itemSize]="150"
+        [showLoader]="true"
+        [delay]="250"
+        [loading]="lazyLoading"
+        [lazy]="true"
+        (onLazyLoad)="onLazyLoad($event)"
+        styleClass="border-1 surface-border"
+        [style]="{'width': '500px', 'height': '300px'}">
+        <ng-template pTemplate="item" let-item let-options="options">
+          <div
+            class="flex align-items-center p-2"
+            [ngClass]="{ 'surface-ground': options.odd }"
+            style="height: 150px;">
+            <p-card>
+              <ng-template pTemplate="title">
+                <h3>{{ item.kodneve }}</h3>
+              </ng-template>
+              <div class="allergen-icons">
+                <div *ngFor="let allergen of item.allergenek" class="allergen-icon-container">
+                  <img [src]="allergen.iconUrl" alt="{{ allergen.nev }}" width="24" height="24" class="allergen-icon">
+                  <p class="allergen-name">{{ allergen.nev }}</p>
+                </div>
+              </div>
+            </p-card>
+          </div>
+        </ng-template>
+      </p-scroller>
+      <div>
+
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+

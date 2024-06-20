@@ -1,0 +1,27 @@
+.recept-s {
+    margin-top: 20px;
+  }
+  
+  .allergen-icon-container {
+    position: relative;
+    display: inline-block;
+  }
+  
+  .allergen-name {
+    display: none;
+    position: absolute;
+    background-color: white;
+    border: 1px solid #ccc;
+    padding: 5px;
+    z-index: 1;
+  }
+  
+  .allergen-icon-container:hover .allergen-name {
+    display: block;
+  }
+  
+  .allergen-icon {
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+  }
