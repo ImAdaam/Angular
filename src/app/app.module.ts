@@ -5,6 +5,7 @@ import { TableModule } from 'primeng/table'; // TableModule importálása a Prim
 import { ScrollerModule } from 'primeng/scroller'; // ScrollerModule importálása a PrimeNG-ből
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'; // Animáció modul importálása
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
+import { FormsModule } from '@angular/forms';
 
 
 import { AppRoutingModule } from './app-routing.module';
@@ -13,21 +14,25 @@ import { ReceptekListaComponent } from './receptek-lista/receptek-lista.componen
 import { InMemoryDataService } from './in-memory-data.service';
 //import { ReceptService } from './recept.service';
 import { InMemoryWebApiModule } from 'angular-in-memory-web-api';
+import { AuthComponent } from './auth/auth.component';
+import { provideRouter } from '@angular/router';
 
 @NgModule({
   declarations: [
     AppComponent,
-    ReceptekListaComponent
+    ReceptekListaComponent,
+    AuthComponent
   ],
   imports: [
     BrowserModule,
     CardModule,
-    AppRoutingModule,
     TableModule,
     ScrollerModule,
     BrowserAnimationsModule,
     ProgressSpinnerModule,
-    InMemoryWebApiModule.forRoot(InMemoryDataService)
+    FormsModule,
+    InMemoryWebApiModule.forRoot(InMemoryDataService),
+    AppRoutingModule
   ],
   providers: [],
   bootstrap: [AppComponent]
