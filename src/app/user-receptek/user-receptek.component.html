@@ -1,0 +1,73 @@
+<!--<div *ngIf="recipes.length > 0">
+    <h2>Receptek</h2>
+    <ul>
+    <li *ngFor="let recept of recipes">
+    <h3>{{ recept.cim }}</h3>
+    <p>{{ recept.leiras }}</p>
+    <ul>
+    <li *ngFor="let hozzavalo of recept.hozzavalok">
+    {{ hozzavalo.mennyiseg }} {{ hozzavalo.egyseg }} {{ hozzavalo.anyag.nev }}
+    </li>
+    </ul>
+    </li>
+    </ul>
+      </div>
+      <div *ngIf="recipes.length === 0">
+        <p>Nincsenek receptjeid.</p>
+      </div>
+-->
+<div class="card">
+    <h5>Receptek</h5>
+    <input type="text" (input)="onSearch($event)" placeholder="Keresés...">
+
+
+     <!-- Allergén lista checkboxokkal -->
+     <div class="allergen-list">
+        <h6>Allergének:</h6>
+        <div *ngFor="let allergen of allergenek">
+            <label>
+                <input type="checkbox" [value]="allergen.id" (change)="onAllergenChange($event)">
+                {{ allergen.nev }}
+            </label>
+        </div>
+    </div>
+  
+    <p-table [value]="filteredRecipes" [rows]="rows" [paginator]="true" [totalRecords]="totalRecords"
+             (onPage)="onPageChange($event)" [rowsPerPageOptions]="rowsPerPageOptions">
+      <ng-template pTemplate="header">
+        <tr>
+          <th pSortableColumn="cim">Cím <p-sortIcon field="cim"></p-sortIcon></th>
+          <th pSortableColumn="leiras">Leírás <p-sortIcon field="leiras"></p-sortIcon></th>
+          <th>Hozzávalók</th>
+          <th>Allergének</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-recept>
+        <tr class="overflow">
+          <td>{{ recept.cim }}</td>
+          <td>{{ recept.leiras }}</td>
+          <td>
+            <ul>
+              <li *ngFor="let hozzavalo of recept.hozzavalok">
+                {{ hozzavalo.mennyiseg }} {{ hozzavalo.egyseg }} {{ hozzavalo.anyag.nev }}
+              </li>
+            </ul>
+          </td>
+          <td>
+            <div class="allergen-icons">
+                <div *ngFor="let allergen of recept.allergenek" class="allergen-icon-container" >
+                  <img [src]="allergen.iconUrl" alt="{{ allergen.nev }}" width="24" height="24" class="allergen-icon">
+                  <p class="allergen-name">{{ allergen.nev }}</p>
+                </div>
+            </div>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  
+    <!--<p-paginator [rows]="rows" [first]="first" [totalRecords]="totalRecords"
+                 [rowsPerPageOptions]="[10, 20, 30]" (onPageChange)="onPageChange($event)">
+    </p-paginator>    
+    -->
+  </div>
+

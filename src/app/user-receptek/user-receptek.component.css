@@ -1,0 +1,54 @@
+table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  th, td {
+    border: 1px solid #ddd;
+    padding: 8px;
+  }
+  
+  th {
+    background-color: #f2f2f2;
+  }
+  
+  ul {
+    list-style-type: none;
+    padding: 0;
+  }
+
+  .allergen-icon-container {
+    position: relative;
+    display: flex;
+  }
+  
+  .allergen-name {
+    display: none;
+    position: absolute;
+    top: 24px;
+    background-color: white;
+    border: 1px solid #ccc;
+    padding: 5px;
+    z-index: 1;
+    overflow: visible;
+  }
+  
+  .allergen-icon-container:hover .allergen-name {
+    display: block;
+  }
+  
+  .allergen-icon {
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+    overflow: visible;
+  }
+
+  .overflow{
+    overflow: visible;
+  }
+
+  .allergen-icons {
+    display: flex;
+    flex-wrap: wrap; /* Ha több ikon van, és elférnek egymás mellett, akkor tördeljen */
+  }
