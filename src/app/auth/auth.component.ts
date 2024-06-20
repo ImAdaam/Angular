@@ -4,6 +4,7 @@ import { User } from '../models/User';
 import { AuthService } from '../auth.service';
 import { Route, Router, RouterLink } from '@angular/router';
 
+
 @Component({
   selector: 'app-auth',
   templateUrl: './auth.component.html',
@@ -31,7 +32,7 @@ export class AuthComponent {
   onLogin(): void {
     if (this.authService.login(this.loginEmail, this.loginPassword)) {
       console.log('Sikeres bejelentkezés');
-      this.router.navigate(['']);
+      this.router.navigate(['user']);
       // Navigálás a kezdőoldalra vagy másik védett oldalra
     } else {
       console.log('Sikertelen bejelentkezés');

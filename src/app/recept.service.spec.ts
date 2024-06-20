@@ -14,4 +14,3 @@ describe('ReceptService', () => {
     expect(service).toBeTruthy();
   });
 });
-

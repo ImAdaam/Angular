@@ -51,11 +51,14 @@ import { Hozzavalo } from './models/Hozzavalo';
 import { Csoport } from './models/Csoport';
 import { Kategoria } from './models/Kategoria';
 import { User } from './models/User';
+import { ReceptModel} from './models/Recept'
 
 @Injectable({
   providedIn: 'root',
 })
 export class InMemoryDataService implements InMemoryDbService {
+
+
   createDb() {
     
 
@@ -96,17 +99,22 @@ export class InMemoryDataService implements InMemoryDbService {
     ];
 
     const receptjeim: Recept[] = [
-      { id: 1, kodneve: 'Palacsinta', cim: 'Palacsinta recept', leiras: 'Finom palacsinta recept', hozzavalok: hozzavalok.filter(h => h.receptId === 1), allergenek: [allergenek[1]] },
-      { id: 2, kodneve: 'Rántotta', cim: 'Rántotta recept', leiras: 'Egyszerű rántotta recept', hozzavalok: hozzavalok.filter(h => h.receptId === 2), allergenek: [allergenek[2]] },
-      { id: 3, kodneve: 'Sóskafőzelék', cim: 'Sóskafőzelék recept', leiras: 'Klasszikus sóskafőzelék recept', hozzavalok: hozzavalok.filter(h => h.receptId === 3), allergenek: [allergenek[1], allergenek[0]] },
-      { id: 4, kodneve: 'Sült krumpli', cim: 'Sült krumpli recept', leiras: 'Ropogós sült krumpli recept', hozzavalok: hozzavalok.filter(h => h.receptId === 4), allergenek: [] },
-      { id: 5, kodneve: 'Tejbegríz', cim: 'Tejbegríz recept', leiras: 'Gyermekkorunk kedvence, tejbegríz', hozzavalok: hozzavalok.filter(h => h.receptId === 1).concat({ id: 7, anyagId: 3, anyag: anyagok[3], mennyiseg: 300, egyseg: 'ml', receptId: 5, hozzavaloCsoportok: [] }), allergenek: [allergenek[1]] },
+      { id: 1, cim: 'Palacsinta', leiras: 'Finom palacsinta recept', hozzavalok: hozzavalok.filter(h => h.receptId === 1), allergenek: [allergenek[1]], user: this.users[0] },
+      { id: 2, cim: 'Rántotta', leiras: 'Egyszerű rántotta recept', hozzavalok: hozzavalok.filter(h => h.receptId === 2), allergenek: [allergenek[2]], user: this.users[1] },
+      { id: 3, cim: 'Sóskafőzelék', leiras: 'Klasszikus sóskafőzelék recept', hozzavalok: hozzavalok.filter(h => h.receptId === 3), allergenek: [allergenek[1], allergenek[0]], user: this.users[0] },
+      { id: 4, cim: 'Sült krumpli', leiras: 'Ropogós sült krumpli recept', hozzavalok: hozzavalok.filter(h => h.receptId === 4), allergenek: [], user: this.users[0] },
+      { id: 5, cim: 'Tejbegríz', leiras: 'Gyermekkorunk kedvence, tejbegríz', hozzavalok: hozzavalok.filter(h => h.receptId === 1).concat({ id: 7, anyagId: 3, anyag: anyagok[3], mennyiseg: 300, egyseg: 'ml', receptId: 5, hozzavaloCsoportok: [] }), allergenek: [allergenek[1]], user: this.users[1] },
     ];
+
+    ReceptModel.receptek.forEach(recept => receptjeim.push(recept));
 
     return { anyagok, allergenek, hozzavalok, csoportok, kategoriak, receptjeim};
   }
 
-  private users: User[] = [];
+  private users: User[] = [
+    { id: 1, username: 'johndoe', email: 'john.doe@example.com', password: 'password' },
+    { id: 2, username: 'janedoe', email: 'jane.doe@example.com', password: 'password' }
+  ];
 
   getUsers(): User[] {
     return this.users;
@@ -131,7 +139,7 @@ export class InMemoryDataService implements InMemoryDbService {
     'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJPbmxpbmUgSldUIEJ1aWxkZXIiLCJpYXQiOjE3MTg4MjAyMzUsImV4cCI6MTc1MDM1NjIzNSwiYXVkIjoid3d3LmV4YW1wbGUuY29tIiwic3ViIjoianJvY2tldEBleGFtcGxlLmNvbSIsIkdpdmVuTmFtZSI6IkpvaG5ueSIsIlN1cm5hbWUiOiJSb2NrZXQiLCJFbWFpbCI6Impyb2NrZXRAZXhhbXBsZS5jb20iLCJSb2xlIjpbIk1hbmFnZXIiLCJQcm9qZWN0IEFkbWluaXN0cmF0b3IiXX0.OFXcouGtbWvImAxLstTQwsJ4eMm5xPE3IW38uGTR400'
     
   ]
-
+  /*
   login(email: string, password: string): { token: string } | null {
     const user = this.users.find(u => u.email === email && u.password === password);
     if (user) {
@@ -140,5 +148,34 @@ export class InMemoryDataService implements InMemoryDbService {
       return { token: token }
     }
     return null;
+  }
+    */
+
+  login(email: string, password: string): { token: string, userId: number } | null {
+    const user = this.users.find(u => u.email === email && u.password === password);
+    if (user) {
+      let rand = Math.floor(Math.random() * (4));
+      let token = this.JWT[rand];
+      return { token: token, userId: user.id };
+    }
+    return null;
+  }
+
+  getAllergens(): Allergen[] {
+    return this.createDb().allergenek;
+  }
+
+  getAlapanyag(): Anyag[] {
+    return this.createDb().anyagok;
+  }
+
+  addRecept(recept: any){
+    //const actualUserID: string = Number(localStorage.getItem("actualUserID") || "0").toString();
+    recept.id=this.createDb().receptjeim.length+1;
+    recept.user=this.users.find(user=> user.id==Number(localStorage.getItem("actualUserID")))
+    console.log(this.users.find(user=> user.id==Number(localStorage.getItem("actualUserID"))));
+    console.log(recept);
+    ReceptModel.receptek.push(recept);
+
   }
 }

@@ -6,6 +6,7 @@ import { ScrollerModule } from 'primeng/scroller'; // ScrollerModule importálá
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'; // Animáció modul importálása
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { FormsModule } from '@angular/forms';
+import { ReceptService } from './recept.service';
 
 
 import { AppRoutingModule } from './app-routing.module';
@@ -16,15 +17,25 @@ import { InMemoryDataService } from './in-memory-data.service';
 import { InMemoryWebApiModule } from 'angular-in-memory-web-api';
 import { AuthComponent } from './auth/auth.component';
 import { provideRouter } from '@angular/router';
+import { UserReceptekComponent } from './user-receptek/user-receptek.component';
+import { HttpClientModule } from '@angular/common/http';
+import { MatTableModule } from '@angular/material/table';
+import { PaginatorModule } from 'primeng/paginator';
+import { ReceptCreateComponent } from './recept-create/recept-create.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     ReceptekListaComponent,
-    AuthComponent
+    AuthComponent,
+    UserReceptekComponent,
+    ReceptCreateComponent
   ],
   imports: [
     BrowserModule,
+    HttpClientModule,
+    MatTableModule,
+    PaginatorModule,
     CardModule,
     TableModule,
     ScrollerModule,

@@ -145,7 +145,7 @@ export class ReceptekListaComponent implements OnInit, OnDestroy {
       this.szurtReceptek = [...this.receptek];
     } else {
       this.szurtReceptek = this.receptek.filter(recept =>
-        recept.kodneve.toLowerCase().includes(this.filterExpression)
+        recept.cim.toLowerCase().includes(this.filterExpression)
       );
     }
     console.log('Szurt receptek:', this.szurtReceptek);
