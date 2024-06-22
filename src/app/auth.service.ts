@@ -29,8 +29,9 @@ export class AuthService {
   }
 
   logout(): void {
-    localStorage.removeItem(this.tokenKey);
-    localStorage.removeItem(this.userIdKey);
+    localStorage.removeItem('token');
+    localStorage.removeItem("actualUserID");
+    localStorage.removeItem('user_id');
   }
 
   isLoggedIn(): boolean {
@@ -40,11 +41,6 @@ export class AuthService {
   getToken(): string | null {
     return localStorage.getItem(this.tokenKey);
   }
-
-  /*getLoggedInUserId(): number | null {
-    const userId = localStorage.getItem(this.userIdKey);
-    return userId ? +userId : null;
-  }*/
 
   getLoggedInUserId(): number | null {
     const userId = localStorage.getItem('user_id');
@@ -59,5 +55,5 @@ export class AuthService {
       return undefined;
     }
   }
-  
+
 }

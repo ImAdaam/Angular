@@ -1,4 +1,4 @@
-/*import { Injectable } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { InMemoryDataService } from './in-memory-data.service'; // Az InMemoryDbService-től
@@ -27,27 +27,5 @@ export class ReceptService {
     } else {
       return of([]); // Ha nincs bejelentkezett felhasználó, üres lista
     }
-  }
-}*/
-
-import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
-import { Recept } from './models/Recept';
-import { InMemoryDataService } from './in-memory-data.service';
-import { AuthService } from './auth.service';
-
-@Injectable({
-  providedIn: 'root',
-})
-export class ReceptService {
-  constructor(
-    private inMemoryDataService: InMemoryDataService,
-    private authService: AuthService
-  ) {}
-
-  getUserRecipes(): Observable<Recept[]> {
-    const userId = this.authService.getLoggedInUserId();
-    const userRecipes = this.inMemoryDataService.getRecipes().filter(recept => recept.user.id === userId);
-    return of(userRecipes);
   }
 }

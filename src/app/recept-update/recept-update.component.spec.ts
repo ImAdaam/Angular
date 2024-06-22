@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { UserReceptekComponent } from './user-receptek.component';
+import { ReceptUpdateComponent } from './recept-update.component';
 
-describe('UserReceptekComponent', () => {
-  let component: UserReceptekComponent;
-  let fixture: ComponentFixture<UserReceptekComponent>;
+describe('ReceptUpdateComponent', () => {
+  let component: ReceptUpdateComponent;
+  let fixture: ComponentFixture<ReceptUpdateComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [UserReceptekComponent]
+      declarations: [ReceptUpdateComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(UserReceptekComponent);
+    fixture = TestBed.createComponent(ReceptUpdateComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

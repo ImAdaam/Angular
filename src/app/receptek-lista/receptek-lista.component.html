@@ -1,6 +1,8 @@
 
 <input type="text" (input)="onSearch($event)" placeholder="Keresés...">
 <button (click)="showReceptek()">Receptek listázása</button>
+<button *ngIf="authService.getLoggedInUserId()" routerLink="/user">Vissza a saját receptekhez</button>
+<button *ngIf="authService.getLoggedInUserId()" (click)="showFav()">Kedvenc Receptek listázása</button>
 <button routerLink="/auth">Regisztráció/Belépés</button>
 
 <div class="recept-s" *ngIf="showList">
@@ -22,15 +24,20 @@
             [ngClass]="{ 'surface-ground': options.odd }"
             style="height: 150px;">
             <p-card>
+              <div class="border-1">
+                <img class="borito" [src]="item.borito ? item.borito : 'assets/icons/placeholder.jpg'" alt="{{ item.cim }}">
+              </div>
               <ng-template pTemplate="title">
                 <h3>{{ item.cim }}</h3>
               </ng-template>
+              <button *ngIf="authService.getLoggedInUserId()" (click)="addFavourite(item.id)"><i  class="pi pi-star" [ngStyle]="{'color': getStarColor(item.id)}"></i></button>
               <div class="allergen-icons">
                 <div *ngFor="let allergen of item.allergenek" class="allergen-icon-container">
                   <img [src]="allergen.iconUrl" alt="{{ allergen.nev }}" width="24" height="24" class="allergen-icon">
                   <p class="allergen-name">{{ allergen.nev }}</p>
                 </div>
               </div>
+              
             </p-card>
           </div>
         </ng-template>
@@ -38,6 +45,8 @@
     </div>
   </div>
 </div>
+
+
 
 
 

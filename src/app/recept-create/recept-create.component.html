@@ -1,47 +1,48 @@
 <div class="create-recipe-container">
-  <h2>Új recept hozzáadása</h2>
-  <form [formGroup]="recipeForm" (ngSubmit)="onSubmit()">
-    <div class="form-group">
-      <label for="name">Recept neve</label>
-      <input id="name" formControlName="name" type="text" pInputText class="form-control" />
-      <div *ngIf="recipeForm.get('name')?.invalid && (recipeForm.get('name')?.dirty || recipeForm.get('name')?.touched)">
-        <small class="p-error">A név megadása kötelező.</small>
-      </div>
-    </div>
-    <div class="form-group">
-      <label for="description">Leírás</label>
-      <textarea id="description" formControlName="description" pInputTextarea class="form-control"></textarea>
-      <div *ngIf="recipeForm.get('description')?.invalid && (recipeForm.get('description')?.dirty || recipeForm.get('description')?.touched)">
-        <small class="p-error">A leírás megadása kötelező.</small>
-      </div>
-    </div>
-    <div formArrayName="ingredients" *ngFor="let ingredient of ingredients.controls; let i = index">
-      <div [formGroupName]="i" class="ingredient-group">
-        <label for="baseIngridientId">Hozzávaló</label>
-        <p-dropdown formControlName="baseIngridientId" [options]="baseIngredients" optionLabel="nev" optionValue="id" placeholder="Válassz hozzávalót"></p-dropdown>
-        <div *ngIf="ingredients.controls[i].get('baseIngridientId')?.invalid && (ingredients.controls[i].get('baseIngridientId')?.dirty || ingredients.controls[i].get('baseIngridientId')?.touched)">
-          <small class="p-error">A hozzávaló megadása kötelező.</small>
+    <h2>Új recept hozzáadása</h2>
+    <form [formGroup]="recipeForm" (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <label for="name">Recept neve</label>
+        <input id="name" formControlName="name" type="text" pInputText class="form-control" />
+        <div *ngIf="recipeForm.get('name')?.invalid && (recipeForm.get('name')?.dirty || recipeForm.get('name')?.touched)">
+          <small class="p-error">A név megadása kötelező.</small>
         </div>
-        <label for="quantity">Mennyiség</label>
-        <input formControlName="quantity" type="number" pInputText class="form-control" />
-        <div *ngIf="ingredients.controls[i].get('quantity')?.invalid && (ingredients.controls[i].get('quantity')?.dirty || ingredients.controls[i].get('quantity')?.touched)">
-          <small class="p-error">A mennyiség megadása kötelező.</small>
-        </div>
-        <label for="unit">Mértékegység</label>
-        <input formControlName="unit" type="text" pInputText class="form-control" />
-        <div *ngIf="ingredients.controls[i].get('unit')?.invalid && (ingredients.controls[i].get('unit')?.dirty || ingredients.controls[i].get('unit')?.touched)">
-          <small class="p-error">A mértékegység megadása kötelező.</small>
-        </div>
-        <button pButton type="button" icon="pi pi-minus" (click)="removeIngredient(i)" label="Hozzávaló eltávolítása" class="p-button-danger"></button>
       </div>
-    </div>
-    <div *ngIf="ingredientsError">
-      <small class="p-error">Legalább egy hozzávalót hozzá kell adni.</small>
-    </div>
-    <button pButton type="button" icon="pi pi-plus" (click)="addIngredient()" label="Új hozzávaló hozzáadása"></button>
-    <button pButton type="submit" icon="pi pi-save" label="Mentés" [disabled]="recipeForm.invalid"></button>
-  </form>
-</div>
-
-  
-  
+      <div class="form-group">
+        <label for="description">Leírás</label>
+        <textarea id="description" formControlName="description" pInputTextarea class="form-control"></textarea>
+        <div *ngIf="recipeForm.get('description')?.invalid && (recipeForm.get('description')?.dirty || recipeForm.get('description')?.touched)">
+          <small class="p-error">A leírás megadása kötelező.</small>
+        </div>
+      </div>
+      <div formArrayName="ingredients" *ngFor="let ingredient of ingredients.controls; let i = index">
+        <div [formGroupName]="i" class="ingredient-group">
+          <label for="baseIngridientId">Hozzávaló</label>
+          <p-dropdown formControlName="baseIngridientId" [options]="baseIngredients" optionLabel="nev" optionValue="id" placeholder="Válassz hozzávalót"></p-dropdown>
+          <div *ngIf="ingredients.controls[i].get('baseIngridientId')?.invalid && (ingredients.controls[i].get('baseIngridientId')?.dirty || ingredients.controls[i].get('baseIngridientId')?.touched)">
+            <small class="p-error">A hozzávaló megadása kötelező.</small>
+          </div>
+          <label for="quantity">Mennyiség</label>
+          <input formControlName="quantity" type="number" pInputText class="form-control" />
+          <div *ngIf="ingredients.controls[i].get('quantity')?.invalid && (ingredients.controls[i].get('quantity')?.dirty || ingredients.controls[i].get('quantity')?.touched)">
+            <small class="p-error">A mennyiség megadása kötelező.</small>
+          </div>
+          <label for="unit">Mértékegység</label>
+          <input formControlName="unit" type="text" pInputText class="form-control" />
+          <div *ngIf="ingredients.controls[i].get('unit')?.invalid && (ingredients.controls[i].get('unit')?.dirty || ingredients.controls[i].get('unit')?.touched)">
+            <small class="p-error">A mértékegység megadása kötelező.</small>
+          </div>
+          <button pButton type="button" icon="pi pi-minus" (click)="removeIngredient(i)" label="Hozzávaló eltávolítása" class="p-button-danger"></button>
+        </div>
+      </div>
+      <div *ngIf="ingredientsError">
+        <small class="p-error">Legalább egy hozzávalót hozzá kell adni.</small>
+      </div>
+      <div> 
+        <input type="file" (change)="onFileSelected($event)">
+        <small *ngIf="hiba">A fájl mérete túl nagy, vagy a kiterjesztése nem jó, válasszon másik fájlt.</small>
+      </div>
+      <button pButton type="button" icon="pi pi-plus" (click)="addIngredient()" label="Új hozzávaló hozzáadása"></button>
+      <button pButton type="submit" icon="pi pi-save" label="Mentés" [disabled]="recipeForm.invalid"></button>
+    </form>
+  </div>

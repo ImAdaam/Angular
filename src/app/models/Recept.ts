@@ -28,14 +28,16 @@ export class Recept {
     public hozzavalok: Hozzavalo[];
     public allergenek: Allergen[];
     public user: User; // Új mező hozzáadása
+    public borito: string;
 
-    constructor(id: number, cime: string, leirasa: string, hozzavalok: Hozzavalo[], allergenek: Allergen[], user: User) {
+    constructor(id: number, cime: string, leirasa: string, hozzavalok: Hozzavalo[], allergenek: Allergen[], user: User, borito: string) {
         this.id = id;
         this.cim = cime;
         this.leiras = leirasa;
         this.hozzavalok = hozzavalok;
         this.allergenek = allergenek; // Hozzáadva az allergenek mező
         this.user = user;
+        this.borito = borito;
     }
 
 

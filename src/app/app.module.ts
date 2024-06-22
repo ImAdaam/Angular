@@ -7,17 +7,12 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations'; 
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { FormsModule } from '@angular/forms';
 import { ReceptService } from './recept.service';
-import { AuthGuard } from './auth.guard';
 import { ReactiveFormsModule } from '@angular/forms';
-import { ButtonModule } from 'primeng/button';
-import { DividerModule } from 'primeng/divider';
-import { CheckboxModule } from 'primeng/checkbox';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { DropdownModule } from 'primeng/dropdown';
-import { InputTextareaModule } from 'primeng/inputtextarea';
-import { ToastModule } from 'primeng/toast';
-import { InputTextModule } from 'primeng/inputtext';
-
+import { ButtonModule } from 'primeng/button';
+import { DividerModule } from 'primeng/divider';
+import { AuthGuard } from './auth.guard';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -28,10 +23,16 @@ import { InMemoryWebApiModule } from 'angular-in-memory-web-api';
 import { AuthComponent } from './auth/auth.component';
 import { provideRouter } from '@angular/router';
 import { UserReceptekComponent } from './user-receptek/user-receptek.component';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { MatTableModule } from '@angular/material/table';
 import { PaginatorModule } from 'primeng/paginator';
 import { ReceptCreateComponent } from './recept-create/recept-create.component';
+import { ReceptUpdateComponent } from './recept-update/recept-update.component';
+import { AuthInterceptor } from './auth.interceptor';
+
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { ConfirmationService } from 'primeng/api';
+
 
 @NgModule({
   declarations: [
@@ -39,7 +40,8 @@ import { ReceptCreateComponent } from './recept-create/recept-create.component';
     ReceptekListaComponent,
     AuthComponent,
     UserReceptekComponent,
-    ReceptCreateComponent
+    ReceptCreateComponent,
+    ReceptUpdateComponent
   ],
   imports: [
     BrowserModule,
@@ -47,24 +49,26 @@ import { ReceptCreateComponent } from './recept-create/recept-create.component';
     MatTableModule,
     PaginatorModule,
     CardModule,
+    HttpClientModule,
     TableModule,
     ScrollerModule,
+    DividerModule,
+    ButtonModule,
+    MultiSelectModule,
+    DropdownModule,
     BrowserAnimationsModule,
     ProgressSpinnerModule,
     FormsModule,
     ReactiveFormsModule,
-    ButtonModule,
-    DividerModule,
-    CheckboxModule,
-    MultiSelectModule,
-    DropdownModule,
-    InputTextareaModule,
-    ToastModule,
-    InputTextModule,
     InMemoryWebApiModule.forRoot(InMemoryDataService),
-    AppRoutingModule
+    AppRoutingModule,
+    ConfirmDialogModule
   ],
-  providers: [AuthGuard],
+  providers: [
+    AuthGuard,
+    ConfirmationService,
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

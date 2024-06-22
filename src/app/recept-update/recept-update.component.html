@@ -1,0 +1,156 @@
+<!--
+<p>helo</p>
+<form (ngSubmit)="updateRecipe()">
+    <label>Cím:</label>
+    <input type="text" [(ngModel)]="recipe.cim" name="cim" required>
+    
+    <label>Leírás:</label>
+    <textarea [(ngModel)]="recipe.leiras" name="leiras" required></textarea>
+    
+    
+  
+    <button type="submit">Recept frissítése</button>
+  </form>
+
+-->
+
+
+<!--
+<div class="edit-recipe-container">
+    <p-card>
+      <ng-template pTemplate="header">
+        <div class="header">
+          <h2>Recept szerkesztése</h2>
+          <button pButton type="button" icon="pi pi-times" class="close-button" (click)="navigateToUserPage()"></button>
+        </div>
+      </ng-template>
+      <form [formGroup]="recipeForm" (ngSubmit)="onSubmit()">
+        <div class="p-fluid p-formgrid p-grid">
+          <div class="p-field p-col-12">
+            <label for="name">Recept neve</label>
+            <input id="name" formControlName="name" type="text" pInputText />
+            <div *ngIf="recipeForm.get('name')?.invalid && (recipeForm.get('name')?.dirty || recipeForm.get('name')?.touched)">
+              <small class="p-error">A név megadása kötelező.</small>
+            </div>
+          </div>
+          <div class="p-field p-col-12">
+            <label for="description">Leírás</label>
+            <textarea id="description" formControlName="description" pInputTextarea rows="4"></textarea>
+            <div *ngIf="recipeForm.get('description')?.invalid && (recipeForm.get('description')?.dirty || recipeForm.get('description')?.touched)">
+              <small class="p-error">A leírás megadása kötelező.</small>
+            </div>
+          </div>
+          <div formArrayName="ingredients" *ngFor="let ingredient of ingredients.controls; let i = index" class="p-field p-col-12 ingredient-group">
+            <div [formGroupName]="i" class="p-grid">
+              <div class="p-field p-col-4">
+                <label for="baseIngridientId">Hozzávaló</label>
+                <p-dropdown formControlName="baseIngridientId" [options]="baseIngredients" optionLabel="nev" optionValue="id" placeholder="Válassz hozzávalót"></p-dropdown>
+                <div *ngIf="ingredients.controls[i].get('baseIngridientId')?.invalid && (ingredients.controls[i].get('baseIngridientId')?.dirty || ingredients.controls[i].get('baseIngridientId')?.touched)">
+                  <small class="p-error">A hozzávaló megadása kötelező.</small>
+                </div>
+              </div>
+              <div class="p-field p-col-3">
+                <label for="quantity">Mennyiség</label>
+                <input formControlName="quantity" type="number" pInputText />
+                <div *ngIf="ingredients.controls[i].get('quantity')?.invalid && (ingredients.controls[i].get('quantity')?.dirty || ingredients.controls[i].get('quantity')?.touched)">
+                  <small class="p-error">A mennyiség megadása kötelező.</small>
+                </div>
+              </div>
+              <div class="p-field p-col-3">
+                <label for="unit">Mértékegység</label>
+                <input formControlName="unit" type="text" pInputText />
+                <div *ngIf="ingredients.controls[i].get('unit')?.invalid && (ingredients.controls[i].get('unit')?.dirty || ingredients.controls[i].get('unit')?.touched)">
+                  <small class="p-error">A mértékegység megadása kötelező.</small>
+                </div>
+              </div>
+              <div class="p-field p-col-2 p-d-flex p-ai-end">
+                <button pButton type="button" icon="pi pi-minus" (click)="removeIngredient(i)" label="Hozzávaló eltávolítása" class="p-button-danger p-ml-2"></button>
+              </div>
+            </div>
+          </div>
+          <div class="p-field p-col-12">
+            <button pButton type="button" icon="pi pi-plus" (click)="addIngredient()" label="Új hozzávaló hozzáadása" class="p-mr-2"></button>
+          </div>
+          <div *ngIf="ingredientsError" class="p-col-12">
+            <small class="p-error">Legalább egy hozzávalót hozzá kell adni.</small>
+          </div>
+        </div>
+        <div class="p-d-flex p-jc-center p-mt-4">
+          <button pButton type="submit" icon="pi pi-save" label="Mentés" [disabled]="recipeForm.invalid" class="save-button"></button>
+        </div>
+      </form>
+    </p-card>
+  </div>
+
+-->
+
+<div class="edit-recipe-container">
+    <p-card>
+      <ng-template pTemplate="header">
+        <div class="header">
+          <h2>Recept szerkesztése</h2>
+          <button pButton type="button" icon="pi pi-times" class="close-button" (click)="navigateToUserPage()"></button>
+        </div>
+      </ng-template>
+      <form [formGroup]="recipeForm" (ngSubmit)="onSubmit()">
+        <div class="p-fluid p-formgrid p-grid">
+          <div class="p-field p-col-12">
+            <label for="name">Recept neve</label>
+            <input id="name" formControlName="name" type="text" pInputText />
+            <div *ngIf="recipeForm.get('name')?.invalid && (recipeForm.get('name')?.dirty || recipeForm.get('name')?.touched)">
+              <small class="p-error">A név megadása kötelező.</small>
+            </div>
+          </div>
+          <div class="p-field p-col-12">
+            <label for="description">Leírás</label>
+            <textarea id="description" formControlName="description" pInputTextarea rows="4"></textarea>
+            <div *ngIf="recipeForm.get('description')?.invalid && (recipeForm.get('description')?.dirty || recipeForm.get('description')?.touched)">
+              <small class="p-error">A leírás megadása kötelező.</small>
+            </div>
+          </div>
+          <div formArrayName="ingredients" *ngFor="let ingredient of ingredients.controls; let i = index" class="p-field p-col-12 ingredient-group">
+            <div [formGroupName]="i" class="p-grid">
+              <div class="p-field p-col-4">
+                <label for="baseIngridientId">Hozzávaló</label>
+                <p-dropdown formControlName="baseIngridientId" [options]="baseIngredients" optionLabel="name" optionValue="id" placeholder="Válassz hozzávalót"></p-dropdown>
+                <div *ngIf="ingredients.controls[i].get('baseIngridientId')?.invalid && (ingredients.controls[i].get('baseIngridientId')?.dirty || ingredients.controls[i].get('baseIngridientId')?.touched)">
+                  <small class="p-error">A hozzávaló megadása kötelező.</small>
+                </div>
+              </div>
+              <div class="p-field p-col-3">
+                <label for="quantity">Mennyiség</label>
+                <input formControlName="quantity" type="number" pInputText />
+                <div *ngIf="ingredients.controls[i].get('quantity')?.invalid && (ingredients.controls[i].get('quantity')?.dirty || ingredients.controls[i].get('quantity')?.touched)">
+                  <small class="p-error">A mennyiség megadása kötelező.</small>
+                </div>
+              </div>
+              <div class="p-field p-col-3">
+                <label for="unit">Mértékegység</label>
+                <input formControlName="unit" type="text" pInputText />
+                <div *ngIf="ingredients.controls[i].get('unit')?.invalid && (ingredients.controls[i].get('unit')?.dirty || ingredients.controls[i].get('unit')?.touched)">
+                  <small class="p-error">A mértékegység megadása kötelező.</small>
+                </div>
+              </div>
+              <div class="p-field p-col-2 p-d-flex p-ai-end">
+                <button pButton type="button" icon="pi pi-minus" (click)="removeIngredient(i)" label="Hozzávaló eltávolítása" class="p-button-danger p-ml-2"></button>
+              </div>
+            </div>
+          </div>
+          <div class="p-field p-col-12">
+            <button pButton type="button" icon="pi pi-plus" (click)="addIngredient()" label="Új hozzávaló hozzáadása" class="p-mr-2"></button>
+          </div>
+          <div *ngIf="ingredientsError" class="p-col-12">
+            <small class="p-error">Legalább egy hozzávalót hozzá kell adni.</small>
+          </div>
+          <div class="p-field p-col-12">
+            <label for="coverImage">Borítókép kiválasztása</label>
+            <input id="coverImage" type="file" (change)="onFileSelected($event)" />
+            <button pButton type="button" icon="pi pi-times" (click)="clearCoverImage()" label="Borítókép törlése" class="p-button-danger p-ml-2"></button>
+          </div>
+        </div>
+        <div class="p-d-flex p-jc-center p-mt-4">
+          <button pButton type="submit" icon="pi pi-save" label="Mentés" [disabled]="recipeForm.invalid" class="save-button"></button>
+        </div>
+      </form>
+    </p-card>
+  </div>

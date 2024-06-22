@@ -25,3 +25,9 @@
     height: 24px;
     cursor: pointer;
   }
+
+  .borito{
+    max-width: 10%;
+    max-height: 10%;
+    margin-left: 250px;
+  }

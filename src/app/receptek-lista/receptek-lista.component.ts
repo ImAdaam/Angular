@@ -86,6 +86,7 @@ import { SearchService } from '../search.service';
 import { Subscription } from 'rxjs';
 import { LazyLoadEvent } from 'primeng/api';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
+import { AuthService } from '../auth.service';
 
 @Component({
   selector: 'app-receptek-lista',
@@ -105,7 +106,8 @@ export class ReceptekListaComponent implements OnInit, OnDestroy {
 
   constructor(
     private inMemoryDataService: InMemoryDataService,
-    private searchService: SearchService
+    private searchService: SearchService,
+    public authService: AuthService
   ) {}
 
   ngOnInit(): void {
@@ -185,6 +187,31 @@ export class ReceptekListaComponent implements OnInit, OnDestroy {
       this.szurtReceptek = this.szurtReceptek.concat(nextBatch);
       this.lazyLoading = false;
     }, 300);
+  }
+
+  addFavourite(recipeId: number): void {
+    const user = this.authService.getLoggedInUser();
+    if (user) {
+      const favIndex = user.fav.indexOf(recipeId);
+      if (favIndex > -1) {
+        user.fav.splice(favIndex, 1);
+      } else {
+        user.fav.push(recipeId);
+      }
+    }
+    console.log(user?.fav);
+  }
+
+  getStarColor(id : number){
+    return this.authService.getLoggedInUser()?.fav.includes(id) ? 'yellow' : 'inherit';
+  }
+
+  showFav()
+  {
+    this.szurtReceptek = this.receptek.filter(recept =>
+      this.authService.getLoggedInUser()?.fav.includes(recept.id)
+    );
+
   }
 }
 

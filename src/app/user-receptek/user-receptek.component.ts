@@ -1,4 +1,5 @@
-/*import { Component, OnInit } from '@angular/core';
+/*
+import { Component, OnInit } from '@angular/core';
 import { Recept } from '../models/Recept';
 import { ReceptService } from '../recept.service';
 import { SearchService } from '../search.service';
@@ -6,8 +7,6 @@ import { Subscription } from 'rxjs';
 import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
 import { InMemoryDataService } from '../in-memory-data.service';
 import { Allergen } from '../models/Allergen';
-import { AuthService } from '../auth.service';
-
 
 @Component({
   selector: 'app-user-receptek',
@@ -21,12 +20,12 @@ export class UserReceptekComponent implements OnInit {
 
   private searchSubscription: Subscription | undefined = undefined;
 
-  constructor(private receptService: ReceptService, private searchService: SearchService, private inMemoryDataService: InMemoryDataService, private authservice: AuthService) { }
+  constructor(private receptService: ReceptService, private searchService: SearchService, private inMemoryDataService: InMemoryDataService,) { }
 
   ngOnInit(): void {
     this.loadUserRecipes();
     console.log(this.inMemoryDataService.createDb().receptjeim);
-    this.recipes = this.inMemoryDataService.getRecipes().filter(recipe => recipe.user.id === this.authservice.getLoggedInUserId());
+
     // Feliratkozás a keresési kifejezések figyelésére
     this.searchSubscription = this.searchService.searchTerms$
       .pipe(
@@ -98,115 +97,8 @@ export class UserReceptekComponent implements OnInit {
           recept.allergenek.every(allergen => !(this.allArray.includes(allergen.id)))
         );
     }
-}*/
-
-/*import { Component, OnInit } from '@angular/core';
-import { Recept } from '../models/Recept';
-import { SearchService } from '../search.service';
-import { Subscription } from 'rxjs';
-import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
-import { InMemoryDataService } from '../in-memory-data.service';
-import { Allergen } from '../models/Allergen';
-import { AuthService } from '../auth.service';
-import { Router, NavigationEnd } from '@angular/router';
-
-@Component({
-  selector: 'app-user-receptek',
-  templateUrl: './user-receptek.component.html',
-  styleUrls: ['./user-receptek.component.css']
-})
-export class UserReceptekComponent implements OnInit {
-
-  recipes: Recept[] = [];
-  filteredRecipes: Recept[] = [];
-  private searchSubscription: Subscription | undefined = undefined;
-
-  constructor(
-    private searchService: SearchService,
-    private inMemoryDataService: InMemoryDataService,
-    private authservice: AuthService,
-    private router: Router
-  ) {}
-
-  ngOnInit(): void {
-    this.loadUserRecipes();
-
-    this.searchSubscription = this.searchService.searchTerms$
-      .pipe(
-        debounceTime(300),
-        distinctUntilChanged()
-      )
-      .subscribe(searchTerm => {
-        this.filterRecipes(searchTerm);
-      });
-
-    this.router.events.subscribe(event => {
-      if (event instanceof NavigationEnd) {
-        this.loadUserRecipes();
-      }
-    });
-
-    // Ellenőrzés, hogy van-e szükség frissítésre
-    const navigation = this.router.getCurrentNavigation();
-    if (navigation?.extras?.state?.['refresh']) {
-      this.loadUserRecipes();
-    }
-  }
-
-  first = 0;
-  rows = 10;
-  totalRecords = 0;
-  rowsPerPageOptions = [10, 20, 30];
-
-  onPageChange(event: any) {
-    this.first = event.first;
-    this.rows = event.rows;
-  }
-
-  private loadUserRecipes(): void {
-    const userId = this.authservice.getLoggedInUserId();
-    this.recipes = this.inMemoryDataService.getRecipes().filter(recipe => recipe.user.id === userId);
-    this.filteredRecipes = this.recipes;//[...this.recipes];
-    this.totalRecords = this.recipes.length;
-  }
-
-  onSearch(event: Event): void {
-    const searchTerm = (event.target as HTMLInputElement)?.value.toLowerCase().trim() || '';
-    this.searchService.search(searchTerm);
-  }
-
-  private filterRecipes(searchTerm: string): void {
-    if (!searchTerm.trim()) {
-      this.filteredRecipes = [...this.recipes];
-      return;
-    }
-
-    this.filteredRecipes = this.recipes.filter(recept =>
-      recept.cim.toLowerCase().includes(searchTerm.toLowerCase())
-    );
-  }
-
-  allergenek = this.inMemoryDataService.getAllergens();
-  allArray: any[] = [];
-
-  public onAllergenChange(event: Event) {
-    const target = event.target as HTMLInputElement;
-    const allergenId = parseInt(target.value);
-
-    if (this.allArray.includes(allergenId)) {
-      this.allArray.splice(this.allArray.indexOf(allergenId), 1);
-    } else {
-      this.allArray.push(allergenId);
-    }
-
-    this.filteredRecipes = this.recipes.filter(recept =>
-      recept.allergenek.every(allergen => !(this.allArray.includes(allergen.id)))
-    );
-  }
-}*/
-
-
-
+}
+    */
 
 import { Component, OnInit } from '@angular/core';
 import { Recept } from '../models/Recept';
@@ -218,10 +110,13 @@ import { Allergen } from '../models/Allergen';
 import { AuthService } from '../auth.service';
 import { Router, NavigationEnd } from '@angular/router';
 
+import { ConfirmationService } from 'primeng/api';
+
 @Component({
   selector: 'app-user-receptek',
   templateUrl: './user-receptek.component.html',
   styleUrls: ['./user-receptek.component.css']
+  //providers: [ConfirmationService]
 })
 export class UserReceptekComponent implements OnInit {
   recipes: Recept[] = [];
@@ -237,7 +132,8 @@ export class UserReceptekComponent implements OnInit {
     private searchService: SearchService,
     private inMemoryDataService: InMemoryDataService,
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private confirmationService: ConfirmationService
   ) {}
 
     ngOnInit(): void {
@@ -327,9 +223,39 @@ export class UserReceptekComponent implements OnInit {
 
     this.filterRecipes();
   }
+
+  
+  deleteRecipe(recipeId: number): void {
+    this.inMemoryDataService.deleteRecipe(recipeId);
+    this.loadUserRecipes();
+  }
+    
+
+  confirmDelete(recipeId: number): void {
+    this.confirmationService.confirm({
+      message: 'Biztosan törölni szeretnéd ezt a receptet?',
+      header: 'Törlés megerősítése',
+      icon: 'pi pi-exclamation-triangle',
+      accept: () => {
+        this.deleteRecipe(recipeId);
+      },
+      reject: () => {
+        console.log("rejecteltél");
+      }
+    });
+  }
+
+  editRecipe(recipeId: number): void {
+    this.router.navigate(['/update', recipeId]);
+  }
+
+  logout(): void {
+    this.authService.logout();
+    this.router.navigate(['/auth']);
+  }
+
+  navigateBack(){
+    this.router.navigate(['/']);
+  }
+
 }
-
-
-
-
-
