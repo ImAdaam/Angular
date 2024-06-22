@@ -7,6 +7,16 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations'; 
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { FormsModule } from '@angular/forms';
 import { ReceptService } from './recept.service';
+import { AuthGuard } from './auth.guard';
+import { ReactiveFormsModule } from '@angular/forms';
+import { ButtonModule } from 'primeng/button';
+import { DividerModule } from 'primeng/divider';
+import { CheckboxModule } from 'primeng/checkbox';
+import { MultiSelectModule } from 'primeng/multiselect';
+import { DropdownModule } from 'primeng/dropdown';
+import { InputTextareaModule } from 'primeng/inputtextarea';
+import { ToastModule } from 'primeng/toast';
+import { InputTextModule } from 'primeng/inputtext';
 
 
 import { AppRoutingModule } from './app-routing.module';
@@ -42,10 +52,19 @@ import { ReceptCreateComponent } from './recept-create/recept-create.component';
     BrowserAnimationsModule,
     ProgressSpinnerModule,
     FormsModule,
+    ReactiveFormsModule,
+    ButtonModule,
+    DividerModule,
+    CheckboxModule,
+    MultiSelectModule,
+    DropdownModule,
+    InputTextareaModule,
+    ToastModule,
+    InputTextModule,
     InMemoryWebApiModule.forRoot(InMemoryDataService),
     AppRoutingModule
   ],
-  providers: [],
+  providers: [AuthGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

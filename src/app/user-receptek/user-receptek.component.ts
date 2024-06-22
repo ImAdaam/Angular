@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+/*import { Component, OnInit } from '@angular/core';
 import { Recept } from '../models/Recept';
 import { ReceptService } from '../recept.service';
 import { SearchService } from '../search.service';
@@ -6,6 +6,8 @@ import { Subscription } from 'rxjs';
 import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
 import { InMemoryDataService } from '../in-memory-data.service';
 import { Allergen } from '../models/Allergen';
+import { AuthService } from '../auth.service';
+
 
 @Component({
   selector: 'app-user-receptek',
@@ -19,12 +21,12 @@ export class UserReceptekComponent implements OnInit {
 
   private searchSubscription: Subscription | undefined = undefined;
 
-  constructor(private receptService: ReceptService, private searchService: SearchService, private inMemoryDataService: InMemoryDataService,) { }
+  constructor(private receptService: ReceptService, private searchService: SearchService, private inMemoryDataService: InMemoryDataService, private authservice: AuthService) { }
 
   ngOnInit(): void {
     this.loadUserRecipes();
     console.log(this.inMemoryDataService.createDb().receptjeim);
-
+    this.recipes = this.inMemoryDataService.getRecipes().filter(recipe => recipe.user.id === this.authservice.getLoggedInUserId());
     // Feliratkozás a keresési kifejezések figyelésére
     this.searchSubscription = this.searchService.searchTerms$
       .pipe(
@@ -96,4 +98,238 @@ export class UserReceptekComponent implements OnInit {
           recept.allergenek.every(allergen => !(this.allArray.includes(allergen.id)))
         );
     }
+}*/
+
+/*import { Component, OnInit } from '@angular/core';
+import { Recept } from '../models/Recept';
+import { SearchService } from '../search.service';
+import { Subscription } from 'rxjs';
+import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
+import { InMemoryDataService } from '../in-memory-data.service';
+import { Allergen } from '../models/Allergen';
+import { AuthService } from '../auth.service';
+import { Router, NavigationEnd } from '@angular/router';
+
+@Component({
+  selector: 'app-user-receptek',
+  templateUrl: './user-receptek.component.html',
+  styleUrls: ['./user-receptek.component.css']
+})
+export class UserReceptekComponent implements OnInit {
+
+  recipes: Recept[] = [];
+  filteredRecipes: Recept[] = [];
+  private searchSubscription: Subscription | undefined = undefined;
+
+  constructor(
+    private searchService: SearchService,
+    private inMemoryDataService: InMemoryDataService,
+    private authservice: AuthService,
+    private router: Router
+  ) {}
+
+  ngOnInit(): void {
+    this.loadUserRecipes();
+
+    this.searchSubscription = this.searchService.searchTerms$
+      .pipe(
+        debounceTime(300),
+        distinctUntilChanged()
+      )
+      .subscribe(searchTerm => {
+        this.filterRecipes(searchTerm);
+      });
+
+    this.router.events.subscribe(event => {
+      if (event instanceof NavigationEnd) {
+        this.loadUserRecipes();
+      }
+    });
+
+    // Ellenőrzés, hogy van-e szükség frissítésre
+    const navigation = this.router.getCurrentNavigation();
+    if (navigation?.extras?.state?.['refresh']) {
+      this.loadUserRecipes();
+    }
+  }
+
+  first = 0;
+  rows = 10;
+  totalRecords = 0;
+  rowsPerPageOptions = [10, 20, 30];
+
+  onPageChange(event: any) {
+    this.first = event.first;
+    this.rows = event.rows;
+  }
+
+  private loadUserRecipes(): void {
+    const userId = this.authservice.getLoggedInUserId();
+    this.recipes = this.inMemoryDataService.getRecipes().filter(recipe => recipe.user.id === userId);
+    this.filteredRecipes = this.recipes;//[...this.recipes];
+    this.totalRecords = this.recipes.length;
+  }
+
+  onSearch(event: Event): void {
+    const searchTerm = (event.target as HTMLInputElement)?.value.toLowerCase().trim() || '';
+    this.searchService.search(searchTerm);
+  }
+
+  private filterRecipes(searchTerm: string): void {
+    if (!searchTerm.trim()) {
+      this.filteredRecipes = [...this.recipes];
+      return;
+    }
+
+    this.filteredRecipes = this.recipes.filter(recept =>
+      recept.cim.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+  }
+
+  allergenek = this.inMemoryDataService.getAllergens();
+  allArray: any[] = [];
+
+  public onAllergenChange(event: Event) {
+    const target = event.target as HTMLInputElement;
+    const allergenId = parseInt(target.value);
+
+    if (this.allArray.includes(allergenId)) {
+      this.allArray.splice(this.allArray.indexOf(allergenId), 1);
+    } else {
+      this.allArray.push(allergenId);
+    }
+
+    this.filteredRecipes = this.recipes.filter(recept =>
+      recept.allergenek.every(allergen => !(this.allArray.includes(allergen.id)))
+    );
+  }
+}*/
+
+
+
+
+import { Component, OnInit } from '@angular/core';
+import { Recept } from '../models/Recept';
+import { SearchService } from '../search.service';
+import { Subscription, Subject } from 'rxjs';
+import { debounceTime, distinctUntilChanged, map } from 'rxjs/operators';
+import { InMemoryDataService } from '../in-memory-data.service';
+import { Allergen } from '../models/Allergen';
+import { AuthService } from '../auth.service';
+import { Router, NavigationEnd } from '@angular/router';
+
+@Component({
+  selector: 'app-user-receptek',
+  templateUrl: './user-receptek.component.html',
+  styleUrls: ['./user-receptek.component.css']
+})
+export class UserReceptekComponent implements OnInit {
+  recipes: Recept[] = [];
+  filteredRecipes: Recept[] = [];
+  currentUser: any = null;
+  searchTerms = new Subject<string>();
+  searchTerm: string = ''; // Holds the current search term
+  allergens: Allergen[] = [];
+  selectedAllergens: number[] = [];
+  searchSubscription: Subscription | undefined = undefined;
+
+  constructor(
+    private searchService: SearchService,
+    private inMemoryDataService: InMemoryDataService,
+    private authService: AuthService,
+    private router: Router
+  ) {}
+
+    ngOnInit(): void {
+      this.currentUser = this.authService.getLoggedInUserId();
+      if (this.currentUser) {
+        this.loadUserRecipes();
+        this.allergens = this.inMemoryDataService.getAllergens();
+      }
+    
+      this.searchTerms.pipe(
+        debounceTime(300),
+        distinctUntilChanged(),
+        map(term => term.trim().toLowerCase())
+      ).subscribe(term => {
+        this.searchTerm = term;
+        this.filterRecipes();
+      });
+    
+      this.router.events.subscribe(event => {
+        if (event instanceof NavigationEnd) {
+          this.loadUserRecipes();
+        }
+      });
+    
+      const navigation = this.router.getCurrentNavigation();
+      if (navigation?.extras?.state?.['refresh']) {
+        this.loadUserRecipes();
+      }
+    }
+
+  onSearch(event: any): void {
+    this.searchTerms.next(event.target.value);
+  }
+
+  filterAndSortRecipes(term: string): Recept[] {
+    let filtered = this.recipes;
+
+    if (term) {
+      filtered = filtered.filter(recipe => recipe.cim.toLowerCase().includes(term));
+    }
+
+    if (this.selectedAllergens.length > 0) {
+      filtered = filtered.filter(recipe =>
+        !recipe.allergenek.some(allergen => this.selectedAllergens.includes(allergen.id))
+      );
+    }
+
+    return filtered.sort((a, b) => {
+      const indexA = a.cim.toLowerCase().indexOf(term);
+      const indexB = b.cim.toLowerCase().indexOf(term);
+      return indexA - indexB;
+    });
+  }
+
+  filterRecipes() {
+    this.filteredRecipes = this.filterAndSortRecipes(this.searchTerm);
+  }
+
+  navigateToCreateRecipe(): void {
+    this.router.navigate(['/create']);
+  }
+
+  private loadUserRecipes(): void {
+    const userId = this.authService.getLoggedInUserId();
+    console.log('Current User ID:', userId);
+    //this.recipes = this.inMemoryDataService.getRecipes().filter(recipe => recipe.user.id === userId);
+    const storedRecipes = localStorage.getItem('receptjeim');
+    if (storedRecipes) {
+      this.recipes = JSON.parse(storedRecipes).filter((recipe: any) => recipe.user.id === userId);
+      console.log(storedRecipes);
+    } else {
+      this.recipes = this.inMemoryDataService.getRecipes().filter(recipe => recipe.user.id === userId); // or handle the case when there are no recipes
+    }
+    console.log('User Recipes:', this.recipes);
+    this.filteredRecipes = this.recipes;
+  }
+
+  onAllergenChange(event: Event) {
+    const target = event.target as HTMLInputElement;
+    const allergenId = parseInt(target.value);
+
+    if (this.selectedAllergens.includes(allergenId)) {
+      this.selectedAllergens.splice(this.selectedAllergens.indexOf(allergenId), 1);
+    } else {
+      this.selectedAllergens.push(allergenId);
+    }
+
+    this.filterRecipes();
+  }
 }
+
+
+
+
+

@@ -2,8 +2,7 @@ import { Component } from '@angular/core';
 import { InMemoryDataService } from '../in-memory-data.service';
 import { User } from '../models/User';
 import { AuthService } from '../auth.service';
-import { Route, Router, RouterLink } from '@angular/router';
-
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-auth',
@@ -13,7 +12,7 @@ import { Route, Router, RouterLink } from '@angular/router';
 export class AuthComponent {
   isLoginForm = true;
   isRegisterForm = false;
-  showForms = true; // Változó hozzáadása, alapértelmezett érték: false
+  showForms = true; // Változó hozzáadása, alapértelmezett érték: true
 
   loginEmail: string = '';
   loginPassword: string = '';
@@ -30,7 +29,8 @@ export class AuthComponent {
   }
 
   onLogin(): void {
-    if (this.authService.login(this.loginEmail, this.loginPassword)) {
+    const loginResult = this.authService.login(this.loginEmail, this.loginPassword);
+    if (loginResult) {
       console.log('Sikeres bejelentkezés');
       this.router.navigate(['user']);
       // Navigálás a kezdőoldalra vagy másik védett oldalra
@@ -48,11 +48,13 @@ export class AuthComponent {
       password: this.registerPassword
     };
     this.inMemoryDataService.addUser(newUser);
-    this.isLoginForm =true;
+    this.isLoginForm = true;
     this.isRegisterForm = false;
     console.log('Regisztráció adatok:', newUser);
   }
 }
+
+
 
 
 

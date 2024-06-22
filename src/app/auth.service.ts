@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { InMemoryDataService } from './in-memory-data.service';
+import { User } from './models/User';
 
 @Injectable({
   providedIn: 'root',
@@ -40,8 +41,23 @@ export class AuthService {
     return localStorage.getItem(this.tokenKey);
   }
 
-  getLoggedInUserId(): number | null {
+  /*getLoggedInUserId(): number | null {
     const userId = localStorage.getItem(this.userIdKey);
     return userId ? +userId : null;
+  }*/
+
+  getLoggedInUserId(): number | null {
+    const userId = localStorage.getItem('user_id');
+    return userId ? parseInt(userId, 10) : null;
   }
+
+  getLoggedInUser(): User | undefined{
+    const userData = localStorage.getItem(this.userIdKey);
+    if(userData){
+      return this.inMemoryDataService.getUsers().find(id=>id.id == parseInt(userData));
+    } else {
+      return undefined;
+    }
+  }
+  
 }
