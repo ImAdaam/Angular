@@ -1,33 +1,44 @@
 .recept-s {
-    margin-top: 20px;
-  }
-  
-  .allergen-icon-container {
-    position: relative;
-    display: inline-block;
-  }
-  
-  .allergen-name {
-    display: none;
-    position: absolute;
-    background-color: white;
-    border: 1px solid #ccc;
-    padding: 5px;
-    z-index: 1;
-  }
-  
-  .allergen-icon-container:hover .allergen-name {
-    display: block;
-  }
-  
-  .allergen-icon {
-    width: 24px;
-    height: 24px;
-    cursor: pointer;
-  }
+  width: 95%;
+  margin: 20px auto;
+}
 
-  .borito{
-    max-width: 10%;
-    max-height: 10%;
-    margin-left: 250px;
-  }
+.recept-tiles {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 20px;
+}
+
+.allergen-icon-container {
+  position: relative;
+  display: inline-block;
+}
+
+.allergen-name {
+  display: none;
+  position: absolute;
+  background-color: white;
+  border: 1px solid #ccc;
+  padding: 5px;
+  z-index: 1;
+}
+
+.allergen-icon-container:hover .allergen-name {
+  display: block;
+}
+
+.allergen-icon {
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
+}
+
+.card {
+  display: flex;
+  justify-content: center;
+  height: 100%;
+}
+
+.p-card {
+  width: 100%;
+}

@@ -1,4 +1,3 @@
-
 <input type="text" (input)="onSearch($event)" placeholder="Keresés...">
 <button (click)="showReceptek()">Receptek listázása</button>
 <button *ngIf="authService.getLoggedInUserId()" routerLink="/user">Vissza a saját receptekhez</button>
@@ -6,48 +5,27 @@
 <button routerLink="/auth">Regisztráció/Belépés</button>
 
 <div class="recept-s" *ngIf="showList">
-  <div class="recept-tiles">
-    <div class="card flex justify-content-center">
-      <p-scroller
-        [items]="szurtReceptek"
-        [itemSize]="150"
-        [showLoader]="true"
-        [delay]="250"
-        [loading]="lazyLoading"
-        [lazy]="true"
-        (onLazyLoad)="onLazyLoad($event)"
-        styleClass="border-1 surface-border"
-        [style]="{'width': '500px', 'height': '300px'}">
-        <ng-template pTemplate="item" let-item let-options="options">
-          <div
-            class="flex align-items-center p-2"
-            [ngClass]="{ 'surface-ground': options.odd }"
-            style="height: 150px;">
-            <p-card>
-              <div class="border-1">
-                <img class="borito" [src]="item.borito ? item.borito : 'assets/icons/placeholder.jpg'" alt="{{ item.cim }}">
-              </div>
-              <ng-template pTemplate="title">
-                <h3>{{ item.cim }}</h3>
-              </ng-template>
-              <button *ngIf="authService.getLoggedInUserId()" (click)="addFavourite(item.id)"><i  class="pi pi-star" [ngStyle]="{'color': getStarColor(item.id)}"></i></button>
-              <div class="allergen-icons">
-                <div *ngFor="let allergen of item.allergenek" class="allergen-icon-container">
-                  <img [src]="allergen.iconUrl" alt="{{ allergen.nev }}" width="24" height="24" class="allergen-icon">
-                  <p class="allergen-name">{{ allergen.nev }}</p>
+    <div class="recept-tiles">
+        <div class="card flex justify-content-center" *ngFor="let item of szurtReceptek; let i = index">
+            <p-card header="Név: {{ item.cim }}" subheader="" [style]="{ height:'fit-content' }">
+                <ng-template pTemplate="header">
+                    <img class="borito" [src]="item.borito ? item.borito : 'assets/icons/placeholder.jpg'" alt="{{ item.cim }}">
+                </ng-template>
+                <div class="flex flex-column" style="padding: 0 !important;">
+                    <p>
+                        Allergének:
+                    </p>
+                    <div class="allergen-icons">
+                        <div *ngFor="let allergen of item.allergenek" class="allergen-icon-container">
+                            <img [src]="allergen.iconUrl" alt="{{ allergen.nev }}" width="24" height="24" class="allergen-icon">
+                            <p class="allergen-name">{{ allergen.nev }}</p>
+                        </div>
+                    </div>
                 </div>
-              </div>
-              
+                <button *ngIf="authService.getLoggedInUserId()" (click)="addFavourite(item.id)">
+                    <i class="pi pi-star" [ngStyle]="{'color': getStarColor(item.id)}"></i>
+                </button>
             </p-card>
-          </div>
-        </ng-template>
-      </p-scroller>
+        </div>
     </div>
-  </div>
 </div>
-
-
-
-
-
-
