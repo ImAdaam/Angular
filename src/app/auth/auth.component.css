@@ -75,3 +75,15 @@
     padding: 10px 20px;
     cursor: pointer;
 }
+
+button {
+  padding:10px;
+  border-radius: 10px;
+  background-color: #11b10e;
+  color: white;
+}
+
+button:hover{
+  text-decoration: underline;
+  background-color: #0b7009;
+}

@@ -1,10 +1,10 @@
 <div *ngIf="showForms">
+<!--    <div style="display: flex;gap: 4px;">-->
+<!--        <button (click)="toggleForms('login')">Belépés</button>-->
+<!--        <button (click)="toggleForms('register')">Regisztráció</button>-->
+<!--        <button routerLink="/">Vissza</button>-->
+<!--    </div>-->
     <div class="auth-container">
-      <div>
-        <button (click)="toggleForms('login')">Belépés</button>
-        <button (click)="toggleForms('register')">Regisztráció</button>
-        <button routerLink="/">Vissza</button>
-      </div>
   
       <div *ngIf="isLoginForm">
         <h2>Belépés</h2>

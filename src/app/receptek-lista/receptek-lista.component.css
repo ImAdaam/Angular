@@ -42,3 +42,25 @@
 .p-card {
   width: 100%;
 }
+
+button {
+  padding:10px;
+  border-radius: 10px;
+  background-color: #11b10e;
+  color: white;
+}
+
+button:hover{
+  text-decoration: underline;
+  background-color: #0b7009;
+}
+
+input{
+  border-radius: 10px;
+  color: white;
+  background-color: #979797;
+}
+
+input:focus{
+  border-color: #0b7009;
+}

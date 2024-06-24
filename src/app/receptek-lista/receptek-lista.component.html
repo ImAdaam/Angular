@@ -1,31 +1,42 @@
-<input type="text" (input)="onSearch($event)" placeholder="Keresés...">
-<button (click)="showReceptek()">Receptek listázása</button>
-<button *ngIf="authService.getLoggedInUserId()" routerLink="/user">Vissza a saját receptekhez</button>
-<button *ngIf="authService.getLoggedInUserId()" (click)="showFav()">Kedvenc Receptek listázása</button>
-<button routerLink="/auth">Regisztráció/Belépés</button>
+<div class="listaBody">
 
-<div class="recept-s" *ngIf="showList">
-    <div class="recept-tiles">
-        <div class="card flex justify-content-center" *ngFor="let item of szurtReceptek; let i = index">
-            <p-card header="Név: {{ item.cim }}" subheader="" [style]="{ height:'fit-content' }">
-                <ng-template pTemplate="header">
-                    <img class="borito" [src]="item.borito ? item.borito : 'assets/icons/placeholder.jpg'" alt="{{ item.cim }}">
-                </ng-template>
-                <div class="flex flex-column" style="padding: 0 !important;">
-                    <p>
-                        Allergének:
-                    </p>
-                    <div class="allergen-icons">
-                        <div *ngFor="let allergen of item.allergenek" class="allergen-icon-container">
-                            <img [src]="allergen.iconUrl" alt="{{ allergen.nev }}" width="24" height="24" class="allergen-icon">
-                            <p class="allergen-name">{{ allergen.nev }}</p>
+
+    <div style="display:flex;flex-direction:row;padding-left:30px;gap:16px;">
+        <input type="text" (input)="onSearch($event)" placeholder="Keresés...">
+        <button (click)="showReceptek()">Receptek listázása</button>
+        <button *ngIf="authService.getLoggedInUserId()" routerLink="/user">Vissza a saját receptekhez</button>
+        <button *ngIf="authService.getLoggedInUserId()" (click)="showFav()">Kedvenc Receptek listázása</button>
+        <button routerLink="/auth">Regisztráció/Belépés</button>
+    </div>
+
+    <div class="recept-s" *ngIf="showList">
+        <div class="recept-tiles">
+            <div class="card flex justify-content-center" *ngFor="let item of szurtReceptek; let i = index">
+                <p-card header="Név: {{ item.cim }}" subheader="" [style]="{ height:'fit-content' }">
+                    <ng-template pTemplate="header">
+                        <img class="borito" [src]="item.borito ? item.borito : 'assets/icons/placeholder.jpg'"
+                             alt="{{ item.cim }}">
+                    </ng-template>
+                    <div class="flex flex-column" style="padding: 0 !important;">
+                        <p>
+                            Allergének:
+                        </p>
+                        <div class="allergen-icons">
+                            <div *ngFor="let allergen of item.allergenek" class="allergen-icon-container">
+                                <img [src]="allergen.iconUrl" alt="{{ allergen.nev }}" width="24" height="24"
+                                     class="allergen-icon">
+                                <p class="allergen-name">{{ allergen.nev }}</p>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <button *ngIf="authService.getLoggedInUserId()" (click)="addFavourite(item.id)">
-                    <i class="pi pi-star" [ngStyle]="{'color': getStarColor(item.id)}"></i>
-                </button>
-            </p-card>
+                    <button style="background-color:#979797 !important;" *ngIf="authService.getLoggedInUserId()" (click)="addFavourite(item.id)">
+                        <i class="pi pi-star" [ngStyle]="{'color': getStarColor(item.id)}"></i>
+                    </button>
+                </p-card>
+            </div>
         </div>
     </div>
+
+    <div class="recept-s" *ngIf="!showList">Listázd a recepteket...</div>
+
 </div>

@@ -1,0 +1,51 @@
+.header {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center; /* Vertically center align items */
+    gap: 16px;
+    background-color: #11b10e;
+    color: white;
+    border-bottom: 10px;
+    border-bottom: black;
+    margin-bottom: 30px;
+    padding-top: 15px;
+}
+
+.header h1 {
+    padding: 5px;
+    display: flex; /* Ensure button and text are on the same line */
+    align-items: center; /* Center items vertically */
+}
+
+.header p{
+    padding: 5px;
+}
+
+.header p:hover {
+    border-radius: 10px;
+    text-decoration: underline;
+    background-color: #0b7009;
+}
+
+.header button {
+    color: white;
+    background-color: transparent; /* Remove default button background */
+    border: none; /* Remove default button border */
+}
+
+.header button:hover {
+    border-radius: 10px;
+    text-decoration: underline;
+    background-color: #0b7009;
+}
+
+.header i.pi {
+    border-radius: 10px;
+    font-size: 3.5em;
+    color: white;
+}
+
+.header i.pi:hover {
+    background-color: #0b7009;
+}
