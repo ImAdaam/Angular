@@ -11,28 +11,38 @@
 
     <div class="recept-s" *ngIf="showList">
         <div class="recept-tiles">
-            <div class="card flex h-full" *ngFor="let item of szurtReceptek; let i = index">
-                <p-card header="Név: {{ item.cim }}" subheader="" [style]="{ height:'100%' }" class="transition ease-in-out delay-100 duration-300 hover:-translate-y-1 hover:scale-110 shadow-2xl h-full">
-                    <ng-template pTemplate="header">
-                        <img class="borito" [src]="item.borito ? item.borito : 'assets/icons/placeholder.jpg'"
-                             alt="{{ item.cim }}">
-                    </ng-template>
-                    <div class="flex flex-column" style="padding: 0 !important;">
-                        <p>
-                            Allergének:
-                        </p>
-                        <div class="allergen-icons">
-                            <div *ngFor="let allergen of item.allergenek" class="allergen-icon-container">
-                                <img [src]="allergen.iconUrl" alt="{{ allergen.nev }}" width="24" height="24"
-                                     class="allergen-icon">
-                                <p class="allergen-name">{{ allergen.nev }}</p>
+            <div class="card flex h-full book-container" *ngFor="let item of szurtReceptek; let i = index">
+                <div class="book">
+                    <div class="cover">
+                        <p-card header="{{ item.cim }}" subheader="" [style]="{ height:'100%' }" class="transition ease-in-out delay-100 duration-300 hover:-translate-y-1 hover:scale-110 shadow-2xl h-full">
+                            <ng-template pTemplate="header">
+                                <img class="borito" [src]="item.borito ? item.borito : 'assets/icons/placeholder.jpg'"
+                                     alt="{{ item.cim }}">
+                            </ng-template>
+                            <div class="flex flex-column" style="padding: 0 !important;">
+                                <p>
+                                    Allergének:
+                                </p>
+                                <div class="allergen-icons">
+                                    <div *ngFor="let allergen of item.allergenek" class="allergen-icon-container">
+                                        <img [src]="allergen.iconUrl" alt="{{ allergen.nev }}" width="24" height="24"
+                                             class="allergen-icon">
+                                        <p class="allergen-name">{{ allergen.nev }}</p>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
+                        </p-card>
                     </div>
-                    <button class="hover:text-[yellow]" style="background-color:#979797 !important;" *ngIf="authService.getLoggedInUserId()" (click)="addFavourite(item.id)">
-                        <i class="pi pi-star" [ngStyle]="{'color': getStarColor(item.id)}"></i>
-                    </button>
-                </p-card>
+                    <div class="inner-pages">
+                        <div class="page1">
+                            {{ item.leiras }}
+                            <button class="hover:text-[yellow]" style="background-color:#979797 !important;max-width: fit-content;" *ngIf="authService.getLoggedInUserId()" (click)="addFavourite(item.id)">
+                                <i class="pi pi-star" [ngStyle]="{'color': getStarColor(item.id)}"></i>
+                            </button>
+                        </div>
+                        <div class="page2"></div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
