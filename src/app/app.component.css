@@ -17,6 +17,7 @@
 }
 
 .header h1 {
+    font-size: 2em;
     padding: 5px;
     display: flex; /* Ensure button and text are on the same line */
     align-items: center; /* Center items vertically */
@@ -46,7 +47,7 @@
 
 .header i.pi {
     border-radius: 10px;
-    font-size: 3.5em;
+    font-size: 2em;
     color: white;
 }
 

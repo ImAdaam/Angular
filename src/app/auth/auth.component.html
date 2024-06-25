@@ -1,61 +1,69 @@
 <div *ngIf="showForms">
-<!--    <div style="display: flex;gap: 4px;">-->
-<!--        <button (click)="toggleForms('login')">Belépés</button>-->
-<!--        <button (click)="toggleForms('register')">Regisztráció</button>-->
-<!--        <button routerLink="/">Vissza</button>-->
-<!--    </div>-->
-    <div class="auth-container">
-  
-      <div *ngIf="isLoginForm">
-        <h2>Belépés</h2>
-        <form (ngSubmit)="onLogin()" #loginForm="ngForm">
-          <div>
-            <label for="login-email">Email:</label>
-            <input type="email" id="login-email" [(ngModel)]="loginEmail" name="email" required>
-            <div *ngIf="loginForm.controls['email']?.invalid && loginForm.controls['email']?.touched">
-              <small *ngIf="loginForm.controls['email']?.errors?.['required']">Email cím megadása kötelező.</small>
-              <small *ngIf="loginForm.controls['email']?.errors?.['email']">Érvényes email címet kell megadni.</small>
-            </div>
-          </div>
-          <div>
-            <label for="login-password">Jelszó:</label>
-            <input type="password" id="login-password" [(ngModel)]="loginPassword" name="password" required>
-            <div *ngIf="loginForm.controls['password']?.invalid && loginForm.controls['password']?.touched">
-              <small *ngIf="loginForm.controls['password']?.errors?.['required']">Jelszó megadása kötelező.</small>
-            </div>
-          </div>
-          <button type="submit" [disabled]="!loginForm.form.valid" >Belépés</button>
-        </form>
-      </div>
-  
-      <div *ngIf="isRegisterForm">
-        <h2>Regisztráció</h2>
-        <form (ngSubmit)="onRegister()" #registerForm="ngForm">
-          <div>
-            <label for="register-username">Felhasználónév:</label>
-            <input type="text" id="register-username" [(ngModel)]="registerUsername" name="username" required>
-            <div *ngIf="registerForm.controls['username']?.invalid && registerForm.controls['username']?.touched">
-              <small *ngIf="registerForm.controls['username']?.errors?.['required']">Felhasználónév megadása kötelező.</small>
-            </div>
-          </div>
-          <div>
-            <label for="register-email">Email:</label>
-            <input type="email" id="register-email" [(ngModel)]="registerEmail" name="email" required email>
-            <div *ngIf="registerForm.controls['email']?.invalid && registerForm.controls['email']?.touched">
-              <small *ngIf="registerForm.controls['email']?.errors?.['required']">Email cím megadása kötelező.</small>
-              <small *ngIf="registerForm.controls['email']?.errors?.['email']">Érvényes email címet kell megadni.</small>
-            </div>
-          </div>
-          <div>
-            <label for="register-password">Jelszó:</label>
-            <input type="password" id="register-password" [(ngModel)]="registerPassword" name="password" required minlength="6">
-            <div *ngIf="registerForm.controls['password']?.invalid && registerForm.controls['password']?.touched">
-              <small *ngIf="registerForm.controls['password']?.errors?.['required']">Jelszó megadása kötelező.</small>
-              <small *ngIf="registerForm.controls['password']?.errors?.['minlength']">A jelszónak legalább 6 karakter hosszúnak kell lennie.</small>
-            </div>
-          </div>
-          <button type="submit" [disabled]="!registerForm.form.valid">Regisztráció</button>
-        </form>
-      </div>
+    <div style="display: flex;gap: 4px;margin: 0 auto 8px;max-width:fit-content;">
+        <button style="border:#11b10e 1px solid !important;" (click)="toggleForms('login')">Belépés</button>
+        <button style="border:#11b10e 1px solid !important;" (click)="toggleForms('register')">Regisztráció</button>
     </div>
-  </div>
+    <div class="auth-container">
+
+        <div *ngIf="isLoginForm">
+            <h2>Belépés</h2>
+            <form (ngSubmit)="onLogin()" #loginForm="ngForm">
+                <div>
+                    <label for="login-email">Email:</label>
+                    <input type="email" id="login-email" [(ngModel)]="loginEmail" name="email" required>
+                    <div *ngIf="loginForm.controls['email']?.invalid && loginForm.controls['email']?.touched">
+                        <small class="error-message" *ngIf="loginForm.controls['email']?.errors?.['required']">Email cím
+                            megadása kötelező.</small>
+                        <small class="error-message" *ngIf="loginForm.controls['email']?.errors?.['email']">Érvényes
+                            email címet kell megadni.</small>
+                    </div>
+                </div>
+                <div>
+                    <label for="login-password">Jelszó:</label>
+                    <input type="password" id="login-password" [(ngModel)]="loginPassword" name="password" required>
+                    <div *ngIf="loginForm.controls['password']?.invalid && loginForm.controls['password']?.touched">
+                        <small class="error-message" *ngIf="loginForm.controls['password']?.errors?.['required']">Jelszó
+                            megadása kötelező.</small>
+                    </div>
+                </div>
+                <button type="submit" [disabled]="!loginForm.form.valid">Belépés</button>
+            </form>
+        </div>
+
+        <div *ngIf="isRegisterForm">
+            <h2>Regisztráció</h2>
+            <form (ngSubmit)="onRegister()" #registerForm="ngForm">
+                <div>
+                    <label for="register-username">Felhasználónév:</label>
+                    <input type="text" id="register-username" [(ngModel)]="registerUsername" name="username" required>
+                    <div *ngIf="registerForm.controls['username']?.invalid && registerForm.controls['username']?.touched">
+                        <small class="error-message" *ngIf="registerForm.controls['username']?.errors?.['required']">Felhasználónév
+                            megadása kötelező.</small>
+                    </div>
+                </div>
+                <div>
+                    <label for="register-email">Email:</label>
+                    <input type="email" id="register-email" [(ngModel)]="registerEmail" name="email" required email>
+                    <div *ngIf="registerForm.controls['email']?.invalid && registerForm.controls['email']?.touched">
+                        <small class="error-message" *ngIf="registerForm.controls['email']?.errors?.['required']">Email
+                            cím megadása kötelező.</small>
+                        <small class="error-message" *ngIf="registerForm.controls['email']?.errors?.['email']">Érvényes
+                            email címet kell megadni.</small>
+                    </div>
+                </div>
+                <div>
+                    <label for="register-password">Jelszó:</label>
+                    <input type="password" id="register-password" [(ngModel)]="registerPassword" name="password"
+                           required minlength="6">
+                    <div *ngIf="registerForm.controls['password']?.invalid && registerForm.controls['password']?.touched">
+                        <small class="error-message" *ngIf="registerForm.controls['password']?.errors?.['required']">Jelszó
+                            megadása kötelező.</small>
+                        <small class="error-message" *ngIf="registerForm.controls['password']?.errors?.['minlength']">A
+                            jelszónak legalább 6 karakter hosszúnak kell lennie.</small>
+                    </div>
+                </div>
+                <button type="submit" [disabled]="!registerForm.form.valid">Regisztráció</button>
+            </form>
+        </div>
+    </div>
+</div>
