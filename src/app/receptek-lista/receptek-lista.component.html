@@ -11,8 +11,8 @@
 
     <div class="recept-s" *ngIf="showList">
         <div class="recept-tiles">
-            <div class="card flex justify-content-center" *ngFor="let item of szurtReceptek; let i = index">
-                <p-card header="Név: {{ item.cim }}" subheader="" class="transition ease-in-out delay-100 duration-300 hover:-translate-y-1 hover:scale-110 shadow-2xl" [style]="{ height:'fit-content' }">
+            <div class="card flex h-full" *ngFor="let item of szurtReceptek; let i = index">
+                <p-card header="Név: {{ item.cim }}" subheader="" [style]="{ height:'100%' }" class="transition ease-in-out delay-100 duration-300 hover:-translate-y-1 hover:scale-110 shadow-2xl h-full">
                     <ng-template pTemplate="header">
                         <img class="borito" [src]="item.borito ? item.borito : 'assets/icons/placeholder.jpg'"
                              alt="{{ item.cim }}">
