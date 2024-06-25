@@ -1,5 +1,6 @@
 <div class="search-container">
   <div class="p-inputgroup search-bar">
+      <p class="inline-block align-middle"> Keresés név szerint: </p>
       <span class="p-inputgroup-addon">
           <i class="pi pi-search"></i>
       </span>
@@ -43,7 +44,7 @@
           <td>
             <button pButton type="button" icon="pi pi-trash" class="p-button-danger" (click)="confirmDelete(recept.id)"></button>
             
-            <button pButton type="button" icon="pi pi-pencil" (click)="editRecipe(recept.id)"></button>
+            <button pButton class="successButton" type="button" icon="pi pi-pencil" (click)="editRecipe(recept.id)"></button>
           </td>
       </tr>
   </ng-template>

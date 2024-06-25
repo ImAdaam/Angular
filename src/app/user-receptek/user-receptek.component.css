@@ -1,28 +1,39 @@
 table {
     width: 100%;
     border-collapse: collapse;
-  }
-  
-  th, td {
+}
+.successButton{
+    background-color: #11b10e !important;
+    color: white !important;
+    border-radius: 5px !important;
+    border-color: #11b10e !important;
+    margin-left: 4px !important;
+}
+
+.successButton:hover{
+    background-color: #0b7009 !important;
+}
+
+th, td {
     border: 1px solid #ddd;
     padding: 8px;
-  }
-  
-  th {
+}
+
+th {
     background-color: #f2f2f2;
-  }
-  
-  ul {
+}
+
+ul {
     list-style-type: none;
     padding: 0;
-  }
+}
 
-  .allergen-icon-container {
+.allergen-icon-container {
     position: relative;
     display: flex;
-  }
-  
-  .allergen-name {
+}
+
+.allergen-name {
     display: none;
     position: absolute;
     top: 24px;
@@ -31,24 +42,71 @@ table {
     padding: 5px;
     z-index: 1;
     overflow: visible;
-  }
-  
-  .allergen-icon-container:hover .allergen-name {
+}
+
+.allergen-icon-container:hover .allergen-name {
     display: block;
-  }
-  
-  .allergen-icon {
+}
+
+.allergen-icon {
     width: 24px;
     height: 24px;
     cursor: pointer;
     overflow: visible;
-  }
+}
 
-  .overflow{
+.overflow {
     overflow: visible;
-  }
+}
 
-  .allergen-icons {
+.allergen-icons {
     display: flex;
     flex-wrap: wrap; /* Ha több ikon van, és elférnek egymás mellett, akkor tördeljen */
-  }
+}
+
+.search-container{
+    margin-left: 16px;
+    margin-bottom: 16px;
+    display: flex;
+    flex-direction: row;;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.search-container button{
+    background-color: #11b10e;
+    color: white;
+    border-radius: 5px;
+    border-color: #11b10e;
+}
+
+.search-container button:hover{
+    text-decoration: underline;
+    background-color: #0b7009;
+}
+
+.p-inputgroup {
+    display: flex;
+    align-items: center;
+}
+
+.p-inputgroup p {
+    margin: 0;
+}
+
+.p-inputgroup-addon {
+    margin-left: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px 0 0 5px;
+    display: flex;
+    align-items: center;
+    padding: 5px;
+}
+
+.p-inputgroup input {
+    flex: 1;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 0 5px 5px 0;
+    max-width: 200px;
+}
