@@ -21,6 +21,11 @@ export class ReceptekListaComponent implements OnInit, OnDestroy {
   private searchSubscription: Subscription | undefined;
   showList = false;
 
+  //TODO:
+  // lazyLoad event(first,last)
+  // 10-el kezd
+  // utolsó soron túl scrollor -> még +5 betöltés
+
   lazyLoading: boolean = false;
   loadLazyTimeout: any;
 
