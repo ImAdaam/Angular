@@ -29,7 +29,7 @@
                             </div>
                         </div>
                     </div>
-                    <button style="background-color:#979797 !important;" *ngIf="authService.getLoggedInUserId()" (click)="addFavourite(item.id)">
+                    <button class="hover:text-[yellow]" style="background-color:#979797 !important;" *ngIf="authService.getLoggedInUserId()" (click)="addFavourite(item.id)">
                         <i class="pi pi-star" [ngStyle]="{'color': getStarColor(item.id)}"></i>
                     </button>
                 </p-card>
