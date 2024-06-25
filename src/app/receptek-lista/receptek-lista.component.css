@@ -1,3 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 .recept-s {
   width: 95%;
   margin: 20px auto;
