@@ -14,7 +14,7 @@
   <button pButton type="button" label="Kijelentkezés" (click)="logout()"></button>
 </div>
 
-<p-table [value]="filteredRecipes" [paginator]="true" [rows]="10" [rowsPerPageOptions]="[10, 20, 50]" sortMode="multiple" [responsive]="true" class="custom-table">
+<p-table [value]="filteredRecipes" [paginator]="true" [rows]="3" [rowsPerPageOptions]="[3, 5, 8]" sortMode="multiple" [responsive]="true" class="custom-table">
   <ng-template pTemplate="header">
       <tr>
           <th pSortableColumn="cim">Cím <p-sortIcon field="cim"></p-sortIcon></th>

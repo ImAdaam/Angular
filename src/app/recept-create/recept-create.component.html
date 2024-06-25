@@ -65,6 +65,9 @@
             <small class="p-error">Legalább egy hozzávalót hozzá kell adni.</small>
         </div>
 
-        <button pButton type="submit" class="margin-top: 16px;" icon="pi pi-save" label="Mentés" [disabled]="recipeForm.invalid"></button>
+        <div style="display: flex;gap:16px;">
+            <button pButton type="submit" class="margin-top: 16px;" icon="pi pi-save" label="Mentés" [disabled]="recipeForm.invalid"></button>
+            <button pButton class="margin-top: 16px;" icon="pi pi-arrow-left" label="Vissza" routerLink="/user"></button>
+        </div>
     </form>
 </div>
