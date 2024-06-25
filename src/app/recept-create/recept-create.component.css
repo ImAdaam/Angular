@@ -1,0 +1,145 @@
+.form{
+    margin: 0 16px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1rem;
+}
+
+.form-group label {
+    margin-bottom: 0.5rem;
+    font-weight: bold;
+}
+
+.form-group .form-control {
+    width: 100%;
+    padding: 0.375rem 0.75rem;
+    font-size: 1rem;
+    line-height: 1.5;
+    color: #495057;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    border-radius: 0.25rem;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+.form-group .p-error {
+    color: #dc3545;
+    margin-top: 0.5rem;
+    font-size: 0.875rem;
+}
+
+button{
+    border: 1px solid #11b10e !important;
+    border-radius: 10px!important;
+    margin: 0 5px!important;
+    background-color: #11b10e !important;
+    color: white;
+}
+
+.file-upload-container {
+    margin-top: 16px;
+    margin-bottom: 16px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.file-input {
+    display: none; /* Hide the default file input */
+}
+
+.file-input-label {
+    padding: 8px 16px;
+    font-size: 16px;
+    color: #fff;
+    background-color: #11b10e;
+    border: 2px solid #11b10e;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s, border-color 0.3s;
+}
+
+.file-input-label:hover {
+    background-color: #0e8e09;
+    border-color: #0e8e09;
+}
+
+.error-message {
+    color: #dc3545; /* Standard error color, change if needed */
+    margin-top: 8px;
+    font-size: 14px;
+}
+
+/* Additional styling for error display */
+.error-message {
+    font-size: 0.875rem;
+    color: #dc3545; /* Bootstrap danger color for errors */
+    margin-top: 0.5rem;
+    background-color: #f8d7da; /* Light red background */
+    border: 1px solid #f5c6cb; /* Darker red border */
+    padding: 8px;
+    border-radius: 4px;
+}
+
+.buttonContainer{
+    display: flex;
+    gap: 1rem;
+}
+
+.ingredient-item {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.form-group {
+    flex: 1;
+    margin-right: 10px; /* Adjust spacing between form groups */
+}
+
+.form-group:last-child {
+    margin-right: 0; /* Remove margin from the last form group */
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: bold;
+}
+
+.form-group p-dropdown {
+    width: 100%;
+}
+
+.form-group input[type="number"],
+.form-group input[type="text"] {
+    width: 100%;
+    padding: 0.375rem 0.75rem;
+    font-size: 1rem;
+    line-height: 1.5;
+    color: #495057;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    border-radius: 0.25rem;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+.form-group input[type="number"]:focus,
+.form-group input[type="text"]:focus {
+    border-color: #80bdff;
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
+.form-group .p-error {
+    color: #dc3545;
+    font-size: 0.875rem;
+    margin-top: 0.25rem;
+}
+
+.form-group button {
+    margin-top: 0.5rem;
+}
