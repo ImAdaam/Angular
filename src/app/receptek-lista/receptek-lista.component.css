@@ -5,6 +5,8 @@
 .recept-s {
   width: 95%;
   margin: 20px auto;
+  max-height: 75vh;
+  overflow-y: scroll;
 }
 
 .recept-tiles {
