@@ -35,7 +35,16 @@
                     </div>
                     <div class="inner-pages">
                         <div class="page1">
-                            {{ item.leiras }}
+                            <div style="display: flex;flex-direction: column; gap: 2px;">
+                                <p class="underline">Leírás:</p>
+                                {{ item.leiras }}
+                                <div style="display: flex;flex-direction: column; gap: 2px;margin-top: 6px;">
+                                    <p class="underline">Hozzávalók: </p>
+                                    <div *ngFor="let hozzavalo of item.hozzavalok" style="display: flex;flex-direction: row; gap: 8px;">
+                                        <p>{{ hozzavalo.anyag.nev }}-{{ hozzavalo.mennyiseg }}{{ hozzavalo.egyseg }}</p>
+                                    </div>
+                                </div>
+                            </div>
                             <button class="hover:text-[yellow]" style="background-color:#979797 !important;max-width: fit-content;" *ngIf="authService.getLoggedInUserId()" (click)="addFavourite(item.id)">
                                 <i class="pi pi-star" [ngStyle]="{'color': getStarColor(item.id)}"></i>
                             </button>
