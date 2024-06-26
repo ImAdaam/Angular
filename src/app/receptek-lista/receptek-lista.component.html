@@ -9,8 +9,8 @@
         <button routerLink="/auth">Regisztráció/Belépés</button>
     </div>
 
-    <div id="receptTiles" class="recept-s" *ngIf="showList">
-        <div class="recept-tiles">
+    <div id="receptTiles" class="recept-s">
+        <div class="recept-tiles" *ngIf="showList">
             <div class="card flex h-full book-container" *ngFor="let item of szurtReceptek; let i = index">
                 <div class="book">
                     <div class="cover">
@@ -53,6 +53,9 @@
                     </div>
                 </div>
             </div>
+        </div>
+        <div class="overlay" *ngIf="showList && isLoading">
+            <div class="spinner"></div>
         </div>
     </div>
 
