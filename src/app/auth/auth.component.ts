@@ -43,10 +43,10 @@ export class AuthComponent {
 
     onRegister(): void {
         const users = this.inMemoryDataService.getUsers();
-        if (this.inMemoryDataService.getUsers().filter(user => user.username == this.registerUsername)) {
+        if (this.inMemoryDataService.getUsers().filter(user => user.username == this.registerUsername).length > 0) {
             this.showError('Felhasználónév már létezik');
         } else {
-            if (this.inMemoryDataService.getUsers().filter(user => user.email == this.registerEmail)) {
+            if (this.inMemoryDataService.getUsers().filter(user => user.email == this.registerEmail).length > 0) {
                 this.showError('Email már létezik');
             } else {
                 const newUser: User = {
