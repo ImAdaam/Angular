@@ -3,7 +3,6 @@ import {InMemoryDataService} from '../in-memory-data.service';
 import {User} from '../models/User';
 import {AuthService} from '../auth.service';
 import {Router} from '@angular/router';
-import {ToastModule} from 'primeng/toast';
 import {MessageService} from 'primeng/api';
 
 @Component({
@@ -43,10 +42,10 @@ export class AuthComponent {
 
     onRegister(): void {
         const users = this.inMemoryDataService.getUsers();
-        if (this.inMemoryDataService.getUsers().filter(user => user.username == this.registerUsername).length > 0) {
+        if (users.filter(user => user.username == this.registerUsername).length > 0) {
             this.showError('Felhasználónév már létezik');
         } else {
-            if (this.inMemoryDataService.getUsers().filter(user => user.email == this.registerEmail).length > 0) {
+            if (users.filter(user => user.email == this.registerEmail).length > 0) {
                 this.showError('Email már létezik');
             } else {
                 const newUser: User = {
