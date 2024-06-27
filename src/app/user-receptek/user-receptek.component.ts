@@ -129,6 +129,7 @@ export class UserReceptekComponent implements OnInit {
   deleteRecipe(recipeId: number): void {
     this.inMemoryDataService.deleteRecipe(recipeId);
     this.loadUserRecipes();
+    this.showSuccess('Törölve');
   }
     
 
@@ -139,11 +140,9 @@ export class UserReceptekComponent implements OnInit {
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
         this.deleteRecipe(recipeId);
-        this.showSuccess('Törölve');
       },
       reject: () => {
         this.showInfo('Törlés visszavonva');
-        console.log("rejecteltél");
       }
     });
   }
