@@ -6,12 +6,14 @@ import {SearchService} from '../search.service';
 import {Subscription} from 'rxjs';
 import {debounceTime, distinctUntilChanged} from 'rxjs/operators';
 import {AuthService} from '../auth.service';
-
+import {ToastModule} from 'primeng/toast';
+import {MessageService} from 'primeng/api';
 
 @Component({
     selector: 'app-receptek-lista',
     templateUrl: './receptek-lista.component.html',
-    styleUrls: ['./receptek-lista.component.css']
+    styleUrls: ['./receptek-lista.component.css'],
+    providers: [MessageService]
 })
 export class ReceptekListaComponent implements OnInit, OnDestroy {
     receptek: Recept[] = [];
@@ -26,7 +28,8 @@ export class ReceptekListaComponent implements OnInit, OnDestroy {
     constructor(
         private inMemoryDataService: InMemoryDataService,
         private searchService: SearchService,
-        public authService: AuthService
+        public authService: AuthService,
+        private messageService: MessageService
     ) {
     }
 
@@ -136,7 +139,7 @@ export class ReceptekListaComponent implements OnInit, OnDestroy {
                 user.fav.push(recipeId);
             }
         }
-        console.log(user?.fav);
+        this.showSuccess('Bejelölve kedvencként');
     }
 
     getStarColor(id: number) {
@@ -147,7 +150,10 @@ export class ReceptekListaComponent implements OnInit, OnDestroy {
         this.szurtReceptek = this.receptek.filter(recept =>
             this.authService.getLoggedInUser()?.fav.includes(recept.id)
         );
+    }
 
+    showSuccess(msg: string) {
+        this.messageService.add({severity: 'success', summary: 'Success', detail: msg});
     }
 }
 

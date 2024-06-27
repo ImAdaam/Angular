@@ -34,6 +34,7 @@ import {ConfirmDialogModule} from 'primeng/confirmdialog';
 import {ConfirmationService} from 'primeng/api';
 
 import {ToastModule} from 'primeng/toast';
+import { MessageService } from 'primeng/api';
 
 @NgModule({
     declarations: [
@@ -69,7 +70,8 @@ import {ToastModule} from 'primeng/toast';
     providers: [
         AuthGuard,
         ConfirmationService,
-        {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}
+        {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},
+        MessageService
     ],
     bootstrap: [AppComponent]
 })
