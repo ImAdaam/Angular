@@ -88,15 +88,25 @@ export class ReceptUpdateComponent implements OnInit {
         });
     }
 
-    onFileSelected(event: any): void {
-        this.selectedFile = event.target.files[0];
-        if (this.selectedFile) {
-            const reader = new FileReader();
-            reader.onload = () => {
-                this.selectedFileBase64 = reader.result as string;
-            };
-            reader.readAsDataURL(this.selectedFile);
+    onFileSelected(event: any) {
+        const file: File = event.target.files[0];
+
+        if (file.size > 2 * 1024 * 1024) { // 2MB-nál nagyobb fájlok tiltása
+            alert('A fájl mérete túl nagy. Maximum 2MB lehet.');
+            return;
         }
+
+        const allowedExtensions = /(.jpg|.jpeg|.png)$/i;
+        if (!allowedExtensions.exec(file.name)) {
+            alert('Csak JPG, JPEG és PNG formátumú fájlokat lehet feltölteni.');
+            return;
+        }
+
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = () => {
+            this.selectedFileBase64 = reader.result as string;
+        };
     }
 
     onSubmit(): void {
@@ -108,7 +118,7 @@ export class ReceptUpdateComponent implements OnInit {
 
         const currentUser = this.authService.getLoggedInUser();
         if (!currentUser) {
-          this.showError('Nem vagy bejelentkezve!');
+            this.showError('Nem vagy bejelentkezve!');
             return;
         }
 
@@ -169,11 +179,11 @@ export class ReceptUpdateComponent implements OnInit {
         });
     }
 
-  showSuccess(msg: string) {
-    this.messageService.add({severity: 'success', summary: 'Success', detail: msg});
-  }
+    showSuccess(msg: string) {
+        this.messageService.add({severity: 'success', summary: 'Success', detail: msg});
+    }
 
-  showError(msg: string) {
-    this.messageService.add({severity: 'error', summary: 'Error', detail: msg});
-  }
+    showError(msg: string) {
+        this.messageService.add({severity: 'error', summary: 'Error', detail: msg});
+    }
 }
