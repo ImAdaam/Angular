@@ -2,13 +2,15 @@ import { Component } from '@angular/core';
 import { InMemoryDataService } from '../in-memory-data.service';
 import { User } from '../models/User';
 import { AuthService } from '../auth.service';
-import { Route, Router, RouterLink } from '@angular/router';
-
+import {  Router } from '@angular/router';
+import { ToastModule } from 'primeng/toast';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-auth',
   templateUrl: './auth.component.html',
-  styleUrls: ['./auth.component.css']
+  styleUrls: ['./auth.component.css'],
+  providers: [MessageService]
 })
 export class AuthComponent {
   isLoginForm = true;
@@ -22,7 +24,7 @@ export class AuthComponent {
   registerEmail: string = '';
   registerPassword: string = '';
 
-  constructor(private inMemoryDataService: InMemoryDataService, private authService: AuthService, private router: Router) {}
+  constructor(private inMemoryDataService: InMemoryDataService, private authService: AuthService, private router: Router, private messageService: MessageService) {}
 
   toggleForms(formType: string): void {
     this.isLoginForm = formType === 'login';
@@ -31,12 +33,10 @@ export class AuthComponent {
 
   onLogin(): void {
     if (this.authService.login(this.loginEmail, this.loginPassword)) {
-      console.log('Sikeres bejelentkezés');
       this.router.navigate(['user']);
-      // Navigálás a kezdőoldalra vagy másik védett oldalra
+      this.showSuccess('Sikeres bejelentkezés!');
     } else {
-      console.log('Sikertelen bejelentkezés');
-      // Hibaüzenet megjelenítése
+      this.showError('Sikertelen bejelentkezés!');
     }
   }
 
@@ -51,7 +51,15 @@ export class AuthComponent {
     this.inMemoryDataService.addUser(newUser);
     this.isLoginForm =true;
     this.isRegisterForm = false;
-    console.log('Regisztráció adatok:', newUser);
+    this.showSuccess('Sikeres regisztráció!');
+  }
+
+  showSuccess(msg: string) {
+    this.messageService.add({severity:'success', summary:'Success', detail:msg});
+  }
+
+  showError(msg: string) {
+    this.messageService.add({severity:'error', summary:'Error', detail:msg});
   }
 }
 

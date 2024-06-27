@@ -7,14 +7,16 @@ import { InMemoryDataService } from '../in-memory-data.service';
 import { Allergen } from '../models/Allergen';
 import { AuthService } from '../auth.service';
 import { Router, NavigationEnd } from '@angular/router';
+import { ToastModule } from 'primeng/toast';
+import { MessageService } from 'primeng/api';
 
 import { ConfirmationService } from 'primeng/api';
 
 @Component({
   selector: 'app-user-receptek',
   templateUrl: './user-receptek.component.html',
-  styleUrls: ['./user-receptek.component.css']
-  //providers: [ConfirmationService]
+  styleUrls: ['./user-receptek.component.css'],
+  providers: [MessageService]
 })
 export class UserReceptekComponent implements OnInit {
   recipes: Recept[] = [];
@@ -31,7 +33,8 @@ export class UserReceptekComponent implements OnInit {
     private inMemoryDataService: InMemoryDataService,
     private authService: AuthService,
     private router: Router,
-    private confirmationService: ConfirmationService
+    private confirmationService: ConfirmationService,
+    private messageService: MessageService
   ) {}
 
     ngOnInit(): void {
@@ -136,8 +139,10 @@ export class UserReceptekComponent implements OnInit {
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
         this.deleteRecipe(recipeId);
+        this.showSuccess('Törölve');
       },
       reject: () => {
+        this.showInfo('Törlés visszavonva');
         console.log("rejecteltél");
       }
     });
@@ -156,4 +161,15 @@ export class UserReceptekComponent implements OnInit {
     this.router.navigate(['/']);
   }
 
+  showSuccess(msg: string) {
+    this.messageService.add({severity:'success', summary:'Success', detail:msg});
+  }
+
+  showError(msg: string) {
+    this.messageService.add({severity:'error', summary:'Error', detail:msg});
+  }
+
+  showInfo(msg: string) {
+    this.messageService.add({severity:'info', summary:'Info', detail:msg});
+  }
 }
